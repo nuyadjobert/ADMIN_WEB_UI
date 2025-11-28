@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AttendEase User Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc; /* Very light blue-gray background */
+        }
+        .primary-color-bg { background-color: rgb(79 70 229); } /* Indigo 600 */
+        .primary-color-text { color: rgb(79 70 229); }
+
+        /* Top Navigation Bar Styling */
+        header {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            z-index: 100; /* Increased z-index for fixed header */
+        }
+
+        /* Nav Item Hover/Active Effect */
+        .nav-item {
+            position: relative;
+            padding: 1rem 1.25rem;
+            transition: all 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+        }
+        .nav-item:hover {
+            color: rgb(67 56 202); /* Darker indigo on hover */
+        }
+        
+        .nav-item.active {
+            font-weight: 600;
+            color: rgb(79 70 229);
+        }
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 3px;
+            background-color: rgb(79 70 229);
+            border-top-left-radius: 2px;
+            border-top-right-radius: 2px;
+        }
+
+        /* Card and Button Styles */
+        .stat-card {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border-radius: 16px;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .action-button {
+            transition: all 0.15s;
+        }
+        .action-button:active {
+            transform: scale(0.98);
+        }
+        
+        /* Custom checkbox style (for Tailwind consistency) */
+        .form-checkbox {
+            appearance: none;
+            cursor: pointer;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 0.25rem;
+            border: 1px solid #d1d5db; /* gray-300 */
+            background-color: #ffffff;
+            transition: all 0.15s ease-in-out;
+        }
+
+        .form-checkbox:checked {
+            background-color: rgb(79 70 229); /* Indigo 600 */
+            border-color: rgb(79 70 229);
+            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 00-1.414 0L7 8.586 4.207 5.793a1 1 0 00-1.414 1.414l3.5 3.5a1 1 0 001.414 0l5-5a1 1 0 000-1.414z'/%3e%3c/svg%3e");
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Hide the mobile menu on desktop */
+        @media (min-width: 640px) {
+            #mobile-menu {
+                display: none !important;
+            }
+        }
+        
+        /* Mobile menu specific styles */
+        #mobile-menu a {
+            transition: background-color 0.15s;
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Success Notification Toast (Replaces alert()) -->
+    <div id="success-toast" class="fixed top-4 right-4 bg-green-600 text-white p-4 rounded-xl shadow-2xl transition-all duration-300 transform translate-x-full z-[1000] flex items-center space-x-2" role="alert">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span id="toast-message" class="font-medium text-sm"></span>
+    </div>
+
+    <!-- Header / Top Navigation Bar (Fixed Top) -->
+    <header class="sticky top-0 bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-stretch justify-between h-16">
+                
+                <!-- Logo & Brand Name (Left Side) -->
+                <div class="flex-shrink-0 flex items-center">
+                    <!-- AttendEase Icon -->
+                    <div class="w-8 h-8 flex items-center justify-center primary-color-bg rounded-lg shadow-md">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m2 10V7m2 10V7m2 10V7M12 21a9 9 0 01-9-9 9 9 0 019-9 9 9 0 019 9 9 9 0 01-9 9z"/></svg>
+                    </div>
+                    <span class="ml-3 text-xl font-bold text-gray-900 tracking-tight hidden sm:block">AttendEase Admin</span>
+                </div>
+
+                <!-- Main Navigation Links (Center/Desktop Only) -->
+                <nav class="hidden sm:flex h-full items-center space-x-1">
+                    <!-- Updated: Dashboard -> User Management -->
+                    <a href="#user-management" class="nav-item active text-gray-500 hover:text-gray-900">
+                        <span class="text-sm">User Management</span>
+                    </a>
+                    <!-- Updated: Teachers Roster -> Teacher -->
+                    <a href="#teachers" class="nav-item text-gray-500 hover:text-gray-900">
+                        <span class="text-sm">Teacher</span>
+                    </a>
+                    <!-- Updated: Students Roster -> Student -->
+                    <a href="#students" class="nav-item text-gray-500 hover:text-gray-900">
+                        <span class="text-sm">Student</span>
+                    </a>
+                    <!-- Updated: Pending Approvals -> Reports (retains badge for clarity) -->
+                    <a href="#approvals" class="nav-item text-gray-500 hover:text-gray-900">
+                        <span class="text-sm">Reports</span>
+                        <span class="ml-2 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white bg-red-500 rounded-full">15</span>
+                    </a>
+                </nav>
+                
+                <!-- Right Side: Settings & User Profile (Dropdown Added) -->
+                <div class="flex items-center space-x-3">
+                    
+                    <!-- Settings Dropdown Wrapper (Replaced original button) -->
+                    <div class="relative">
+                        <button id="settings-menu-button" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition duration-150 action-button" aria-label="Settings" aria-expanded="false" aria-controls="settings-menu">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37h.001z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu Content -->
+                        <div id="settings-menu" class="hidden absolute right-0 mt-2 w-56 origin-top-right bg-white rounded-xl shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none transition transform ease-out duration-100" role="menu" aria-orientation="vertical" aria-labelledby="settings-menu-button">
+                            <div class="py-1">
+                                <!-- Profile -->
+                                <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition duration-150" role="menuitem">
+                                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                    Profile
+                                </a>
+                                <!-- Settings -->
+                                <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition duration-150" role="menuitem">
+                                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37h.001z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                    Settings
+                                </a>
+                                <div class="border-t border-gray-100 my-1"></div>
+                                <!-- Log Out -->
+                                <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition duration-150" role="menuitem">
+                                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                                    Log Out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Menu Button (Hamburger) -->
+                    <button class="sm:hidden p-2 rounded-full text-gray-500 hover:bg-gray-100" id="mobile-menu-button" aria-label="Open menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <div class="hidden sm:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#user-management" class="block px-3 py-2 rounded-md text-base font-medium primary-color-text bg-indigo-50">User Management</a>
+                <a href="#teachers" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Teacher</a>
+                <a href="#students" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Student</a>
+                <a href="#approvals" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Reports</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <!-- Updated Heading and ID -->
+        <h1 id="user-management" class="text-3xl font-extrabold text-gray-900 mb-8">User Management Overview</h1>
+
+        <!-- ---------------------------------------------------- -->
+        <!-- 1. Statistics Cards (Teacher, Student, Pending Approved) -->
+        <!-- ---------------------------------------------------- -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            
+            <!-- Card 1: Total Teachers -->
+            <div class="bg-white p-6 stat-card shadow-lg border-l-4 border-indigo-500">
+                <p class="text-sm font-medium text-gray-500">Active Teachers</p>
+                <div class="mt-1 flex items-end justify-between">
+                    <p class="text-4xl font-extrabold primary-color-text">85</p>
+                    <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h-1v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2H3M12 14v4M10 9a2 2 0 114 0 2 2 0 01-4 0z"/></svg>
+                </div>
+            </div>
+
+            <!-- Card 2: Total Students -->
+            <div class="bg-white p-6 stat-card shadow-lg border-l-4 border-green-500">
+                <p class="text-sm font-medium text-gray-500">Total Students</p>
+                <div class="mt-1 flex items-end justify-between">
+                    <p class="text-4xl font-extrabold text-green-600">1,450</p>
+                    <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9a2 2 0 114 0 2 2 0 01-4 0zM4 20v-1a4 4 0 014-4h8a4 4 0 014 4v1H4z"/></svg>
+                </div>
+            </div>
+
+            <!-- Card 3: Pending Approvals -->
+            <div class="bg-white p-6 stat-card shadow-lg border-l-4 border-red-500">
+                <p class="text-sm font-medium text-gray-500">Pending Approvals</p>
+                <div class="mt-1 flex items-end justify-between">
+                    <p class="text-4xl font-extrabold text-red-600">15</p>
+                    <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+            </div>
+
+            <!-- Card 4: Classes in Session (Remaining Statistic) -->
+            <div class="bg-white p-6 stat-card shadow-lg border-l-4 border-teal-500">
+                <p class="text-sm font-medium text-gray-500">Classes in Session</p>
+                <div class="mt-1 flex items-end justify-between">
+                    <p class="text-4xl font-extrabold text-teal-600">42</p>
+                    <svg class="w-8 h-8 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l7-4 7 4M4 10h16v11H4z"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- ---------------------------------------------------- -->
+        <!-- 2. Pending Approvals Section (Covers both Teacher and Student) -->
+        <!-- The ID remains #approvals for the Reports link to function correctly -->
+        <!-- ---------------------------------------------------- -->
+        <h2 id="approvals" class="text-2xl font-bold text-gray-800 mb-6 border-b pb-3">Action Required: Pending Approvals (15 Total)</h2>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+            
+            <!-- Pending Teacher Registrations -->
+            <div class="bg-white p-6 rounded-xl shadow-xl border border-yellow-100">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4 flex items-center">
+                    <span class="text-yellow-500 mr-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h-1v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2H3M12 14v4M10 9a2 2 0 114 0 2 2 0 01-4 0z"/></svg>
+                    </span>
+                    New Teacher Registrations (3)
+                </h3>
+                
+                <!-- Batch Action Header -->
+                <div class="flex justify-between items-center pb-3 border-b border-gray-100 mb-3">
+                    <label class="flex items-center space-x-2 text-sm text-gray-600 cursor-pointer">
+                        <input type="checkbox" id="teacher-select-all" class="form-checkbox">
+                        <span>Select All</span>
+                    </label>
+                    <button id="teacher-approve-selected-btn" class="action-button px-4 py-1.5 text-sm rounded-full text-white bg-indigo-500 hover:bg-indigo-600 font-medium disabled:opacity-50" disabled>
+                        Approve Selected (0)
+                    </button>
+                </div>
+
+                <div class="space-y-3">
+                    <!-- Approval Item 1 -->
+                    <label class="flex items-center justify-between bg-gray-50 p-4 rounded-lg cursor-pointer hover:bg-gray-100">
+                        <div class="flex items-center space-x-4">
+                            <input type="checkbox" name="teacher_approval" class="form-checkbox teacher-approval-checkbox">
+                            <div>
+                                <p class="font-medium text-gray-900">Dr. Helena Vance <span class="text-sm text-gray-500 ml-2">(Physics)</span></p>
+                                <p class="text-xs text-gray-400 mt-0.5">Application submitted 2 days ago.</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-semibold text-yellow-600">PENDING</span>
+                    </label>
+                    <!-- Approval Item 2 -->
+                    <label class="flex items-center justify-between bg-gray-50 p-4 rounded-lg cursor-pointer hover:bg-gray-100">
+                        <div class="flex items-center space-x-4">
+                            <input type="checkbox" name="teacher_approval" class="form-checkbox teacher-approval-checkbox">
+                            <div>
+                                <p class="font-medium text-gray-900">Mr. Kevin Brooks <span class="text-sm text-gray-500 ml-2">(History)</span></p>
+                                <p class="text-xs text-gray-400 mt-0.5">Application submitted 1 day ago.</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-semibold text-yellow-600">PENDING</span>
+                    </label>
+                    <!-- Approval Item 3 (Hidden/More) -->
+                    <label class="flex items-center justify-between bg-gray-50 p-4 rounded-lg cursor-pointer hover:bg-gray-100">
+                        <div class="flex items-center space-x-4">
+                            <input type="checkbox" name="teacher_approval" class="form-checkbox teacher-approval-checkbox">
+                            <div>
+                                <p class="font-medium text-gray-900">Ms. Sarah Lee <span class="text-sm text-gray-500 ml-2">(Math)</span></p>
+                                <p class="text-xs text-gray-400 mt-0.5">Application submitted 4 hours ago.</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-semibold text-yellow-600">PENDING</span>
+                    </label>
+                </div>
+                
+                <p class="text-sm primary-color-text mt-4 cursor-pointer hover:underline">View all 3 teacher applications &rarr;</p>
+            </div>
+            
+            <!-- Pending Student Enrollments -->
+            <div class="bg-white p-6 rounded-xl shadow-xl border border-teal-100">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4 flex items-center">
+                    <span class="text-teal-500 mr-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9a2 2 0 114 0 2 2 0 01-4 0zM4 20v-1a4 4 0 014-4h8a4 4 0 014 4v1H4z"/></svg>
+                    </span>
+                    New Student Requests (12)
+                </h3>
+
+                <!-- Batch Action Header -->
+                <div class="flex justify-between items-center pb-3 border-b border-gray-100 mb-3">
+                    <label class="flex items-center space-x-2 text-sm text-gray-600 cursor-pointer">
+                        <input type="checkbox" id="student-select-all" class="form-checkbox">
+                        <span>Select All</span>
+                    </label>
+                    <button id="student-approve-selected-btn" class="action-button px-4 py-1.5 text-sm rounded-full text-white bg-indigo-500 hover:bg-indigo-600 font-medium disabled:opacity-50" disabled>
+                        Approve Selected (0)
+                    </button>
+                </div>
+                
+                <div class="space-y-3">
+                    <!-- Student Approval Item 1 (New Transfer) -->
+                    <label class="flex items-center justify-between bg-gray-50 p-4 rounded-lg cursor-pointer hover:bg-gray-100">
+                        <div class="flex items-center space-x-4">
+                            <input type="checkbox" name="student_approval" class="form-checkbox student-approval-checkbox">
+                            <div>
+                                <p class="font-medium text-gray-900">Lia Torres <span class="text-sm text-gray-500 ml-2">(Grade 10)</span></p>
+                                <p class="text-xs text-gray-400 mt-0.5">Request type: New Transfer.</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-semibold text-yellow-600">PENDING</span>
+                    </label>
+                    <!-- Student Approval Item 2 (Re-enrollment) -->
+                    <label class="flex items-center justify-between bg-gray-50 p-4 rounded-lg cursor-pointer hover:bg-gray-100">
+                        <div class="flex items-center space-x-4">
+                            <input type="checkbox" name="student_approval" class="form-checkbox student-approval-checkbox">
+                            <div>
+                                <p class="font-medium text-gray-900">Jacob Chen <span class="text-sm text-gray-500 ml-2">(Grade 7)</span></p>
+                                <p class="text-xs text-gray-400 mt-0.5">Request type: Re-enrollment.</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-semibold text-yellow-600">PENDING</span>
+                    </label>
+                    <!-- Student Approval Item 3 (Mock, part of the 12 total) -->
+                    <label class="flex items-center justify-between bg-gray-50 p-4 rounded-lg cursor-pointer hover:bg-gray-100">
+                        <div class="flex items-center space-x-4">
+                            <input type="checkbox" name="student_approval" class="form-checkbox student-approval-checkbox">
+                            <div>
+                                <p class="font-medium text-gray-900">Olivia R. <span class="text-sm text-gray-500 ml-2">(Grade 11)</span></p>
+                                <p class="text-xs text-gray-400 mt-0.5">Request type: New Transfer.</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-semibold text-yellow-600">PENDING</span>
+                    </label>
+                </div>
+                
+                <p class="text-sm primary-color-text mt-4 cursor-pointer hover:underline">View all 12 student applications &rarr;</p>
+            </div>
+        </div>
+
+        <!-- ---------------------------------------------------- -->
+        <!-- 3 & 4. Teacher and Student Roster Management Sections Removed -->
+        <!-- ---------------------------------------------------- -->
+
+    </main>
+
+    <!-- Footer (Simple) -->
+    <footer class="bg-white border-t border-gray-100 mt-10">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
+            &copy; 2025 AttendEase.
+        </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu Toggle, Dropdown, and Batch Approval Logic -->
+    <script>
+        // Function to display a toast notification (replaces alert())
+        function showToast(message) {
+            const toast = document.getElementById('success-toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            
+            // Show the toast (slide in from right)
+            toast.classList.remove('translate-x-full');
+
+            // Hide the toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Mobile Menu Toggle Logic ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                // Ensure settings dropdown is closed when mobile menu opens/closes
+                const settingsMenu = document.getElementById('settings-menu');
+                settingsMenu.classList.add('hidden');
+            });
+            
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // --- Settings Dropdown Toggle Logic ---
+            const settingsMenuButton = document.getElementById('settings-menu-button');
+            const settingsMenu = document.getElementById('settings-menu');
+
+            settingsMenuButton.addEventListener('click', (event) => {
+                settingsMenu.classList.toggle('hidden');
+                const isExpanded = settingsMenuButton.getAttribute('aria-expanded') === 'true' || false;
+                settingsMenuButton.setAttribute('aria-expanded', !isExpanded);
+                event.stopPropagation(); // Prevent document click from immediately closing
+            });
+
+            // Close the dropdown if the user clicks outside of it
+            document.addEventListener('click', (event) => {
+                if (settingsMenu && !settingsMenu.contains(event.target) && !settingsMenuButton.contains(event.target)) {
+                    settingsMenu.classList.add('hidden');
+                    settingsMenuButton.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            // --- Batch Approval Logic (Updated to use showToast) ---
+            function setupBatchApproval(masterId, itemClass, buttonId) {
+                const selectAllCheckbox = document.getElementById(masterId);
+                const itemCheckboxes = document.querySelectorAll(`.${itemClass}`);
+                const approveButton = document.getElementById(buttonId);
+
+                if (!selectAllCheckbox || !approveButton) return;
+
+                const updateCount = () => {
+                    const checkedCount = Array.from(itemCheckboxes).filter(cb => cb.checked).length;
+                    approveButton.textContent = `Approve Selected (${checkedCount})`;
+                    approveButton.disabled = checkedCount === 0;
+                    
+                    // Update the master checkbox state
+                    if (checkedCount === 0) {
+                        selectAllCheckbox.checked = false;
+                        selectAllCheckbox.indeterminate = false;
+                    } else if (checkedCount === itemCheckboxes.length && itemCheckboxes.length > 0) {
+                        selectAllCheckbox.checked = true;
+                        selectAllCheckbox.indeterminate = false;
+                    } else if (checkedCount > 0) {
+                        selectAllCheckbox.checked = false;
+                        selectAllCheckbox.indeterminate = true;
+                    } else {
+                        selectAllCheckbox.checked = false;
+                        selectAllCheckbox.indeterminate = false;
+                    }
+                };
+
+                // Select All functionality
+                selectAllCheckbox.addEventListener('change', () => {
+                    itemCheckboxes.forEach(cb => {
+                        cb.checked = selectAllCheckbox.checked;
+                    });
+                    updateCount();
+                });
+
+                // Individual checkbox functionality
+                itemCheckboxes.forEach(cb => {
+                    cb.addEventListener('change', updateCount);
+                });
+                
+                // Initial load: ensure the button reflects the current state (should be 0)
+                updateCount();
+
+                // Mock Approve action
+                approveButton.addEventListener('click', () => {
+                    const selectedItems = Array.from(itemCheckboxes).filter(cb => cb.checked);
+                    if (selectedItems.length > 0) {
+                        const entityType = masterId.includes('teacher') ? 'teacher' : 'student';
+                        
+                        // Mock API call simulation
+                        console.log(`Approving ${selectedItems.length} items for ${entityType}s.`);
+                        
+                        // Reset checkboxes
+                        selectedItems.forEach(item => item.checked = false);
+                        
+                        // Display the custom toast notification
+                        showToast(`Successfully approved ${selectedItems.length} ${entityType} requests!`); 
+                        updateCount();
+                    }
+                });
+            }
+
+            // Setup for Teacher Approvals
+            setupBatchApproval('teacher-select-all', 'teacher-approval-checkbox', 'teacher-approve-selected-btn');
+
+            // Setup for Student Approvals
+            setupBatchApproval('student-select-all', 'student-approval-checkbox', 'student-approve-selected-btn');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AttendEase - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font for a modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth; /* Enable smooth scrolling for anchor links */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb; /* Very light, professional background */
+        }
+        .primary-color {
+            background-color: rgb(79 70 229); /* Indigo 600 - Primary Brand Color */
+        }
+        .primary-text {
+            color: rgb(79 70 229);
+        }
+
+        /* ------------------ Navigation & Animation Effects ------------------ */
+
+        /* Header is fixed to the top */
+        header {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+        }
+        
+        /* Dropdown/Menu Item Styles */
+        .menu-link {
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        /* Main Nav Link Hover/Active Effect */
+        .nav-item {
+            position: relative;
+            padding: 8px 16px;
+            /* UPDATED: Added transition for transform */
+            transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, transform 0.15s;
+            height: 100%; /* Important for vertical alignment */
+            display: flex;
+            align-items: center;
+            border-radius: 8px; /* Added slight rounding for press effect */
+        }
+        
+        /* NEW: Pressed/Active Click Effect */
+        .nav-item:active {
+            transform: scale(0.98);
+            background-color: rgba(79, 70, 229, 0.1); /* Light indigo background when pressed */
+        }
+
+        /* Underline and Scale effect on hover */
+        .nav-item:hover {
+            color: rgb(79 70 229); /* Primary color text on hover */
+            transform: scale(1.03); /* NEW: Subtle scale up on hover */
+        }
+        
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: rgb(79 70 229);
+            transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+        }
+        .nav-item:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* Active link styling */
+        .nav-item.active {
+            font-weight: 600; /* Semi-bold */
+            color: rgb(79 70 229);
+        }
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background-color: rgb(79 70 229);
+        }
+
+        /* Button Hover Effect */
+        .primary-button {
+            transition: all 0.2s ease-in-out;
+        }
+        .primary-button:hover {
+            background-color: rgb(67 56 202); /* Indigo 700 */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+
+        /* Custom style to adjust the position of inline form fields */
+        .inline-form-field {
+            width: 150px; /* Constrain width on desktop */
+        }
+        /* Style for the Sign In Button in the inline form */
+        .inline-signin-button {
+            height: 40px; /* Match field height */
+        }
+
+        /* Flex grow on desktop to push the toggle button to the far right */
+        .desktop-flex-grow {
+            flex-grow: 1; 
+        }
+        
+        /* Style for the preview section header */
+        .preview-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header / Navigation Bar (Fixed Top) -->
+    <header class="sticky top-0 z-50 bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Logo & Brand Name (Left Side) -->
+                <div class="flex-shrink-0 flex items-center h-full">
+                    <!-- AttendEase Icon -->
+                    <svg class="w-6 h-6 text-white primary-color p-1 rounded-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    <span class="ml-2 text-2xl font-extrabold text-gray-900 tracking-tight">AttendEase</span>
+                </div>
+
+                <!-- DYNAMIC CONTENT AREA: Nav Links <-> Login Form (Desktop Only) -->
+                <!-- UPDATED: Removed left margins and changed alignment to justify-end -->
+                <div id="dynamic-content-container" class="desktop-flex-grow hidden sm:flex h-full items-center justify-end">
+                    
+                    <!-- 1. Navigation Links (Initial State) -->
+                    <!-- UPDATED: Added sm:mr-4 for spacing from the toggle button -->
+                    <nav id="nav-links" class="flex sm:space-x-1 sm:mr-4 h-full items-center">
+                        <!-- Links now point to section IDs -->
+                        <a href="#dashboard-section" class="nav-item active text-gray-500 hover:text-gray-900">Dashboard</a>
+                        <a href="#students-section" class="nav-item text-gray-500 hover:text-gray-900">Students</a>
+                        <a href="#teachers-section" class="nav-item text-gray-500 hover:text-gray-900">Teachers</a>
+                        <a href="#subjects-section" class="nav-item text-gray-500 hover:text-gray-900">Subjects</a>
+                        <!-- About (Replaced Reports) -->
+                        <a href="#about-section" class="nav-item text-gray-500 hover:text-gray-900">About</a> 
+                    </nav>
+
+                    <!-- 2. Inline Login Form (Hidden Initial State) -->
+                    <form id="inline-login-form" 
+                          class="hidden h-full items-center space-x-2 mr-4" 
+                          onsubmit="event.preventDefault(); console.log('Simulated Inline Sign In');">
+                        
+                        <input type="email" id="email" name="email" required placeholder="Email" class="inline-form-field px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+                        
+                        <input type="password" id="password" name="password" required placeholder="Password" class="inline-form-field px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+                        
+                        <button type="submit" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-white primary-color primary-button inline-signin-button">
+                            Login
+                        </button>
+                    </form>
+                </div>
+
+                <!-- RIGHT ALIGNED: Toggle Button and Mobile Menu -->
+                <div class="flex items-center ml-auto sm:ml-0">
+                    
+                    <!-- Sign In / Close Toggle Button -->
+                    <button id="toggle-auth-button" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition duration-150">
+                        <!-- Initial Icon: Sign In/User Icon -->
+                        <svg id="auth-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-18 4h3m4-3a7 7 0 1110 0v1h-17v-1a7 7 0 017 7z"/></svg>
+                    </button>
+                    
+                    <!-- Mobile Menu Button (Hamburger) -->
+                    <button class="sm:hidden p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-2" id="mobile-menu-button">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default, contains all links) -->
+        <div class="sm:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <!-- Links now point to section IDs for mobile navigation -->
+                <a href="#dashboard-section" class="block px-3 py-2 rounded-md text-base font-medium primary-text bg-indigo-50 active">Dashboard</a>
+                <a href="#students-section" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Students</a>
+                <a href="#teachers-section" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Teachers</a>
+                <a href="#subjects-section" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">Subjects</a>
+                <a href="#about-section" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">About</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content / Hero Section -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="text-center">
+            <!-- Main Headline -->
+            <h1 class="text-6xl font-extrabold text-gray-900 tracking-tight sm:text-7xl lg:text-8xl mb-6">
+                Attendance <span class="primary-text">Simplified</span>.
+            </h1>
+            <!-- Subtitle/Tagline -->
+            <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-5 sm:text-2xl">
+                AttendEase is the smart platform for seamless student attendance tracking, teacher management, and subject organization.
+            </p>
+
+            <!-- Call to Action Buttons -->
+            <div class="mt-10 flex justify-center space-x-4">
+                <a href="#" class="primary-button inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-xl shadow-md text-white primary-color">
+                    Get Started Now
+                </a>
+                <a href="#dashboard-section" class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-xl text-gray-700 bg-white hover:bg-gray-50 transition duration-150">
+                    Explore Features
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- Content Preview Sections (Scroll Targets) -->
+    <!-- ---------------------------------------------------- -->
+
+    <!-- 1. Dashboard Preview -->
+    <section id="dashboard-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="preview-header">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Dashboard Overview</h2>
+            <p class="text-gray-500">View real-time attendance statistics and key metrics at a glance.</p>
+        </div>
+        <div class="relative max-w-6xl mx-auto rounded-xl shadow-2xl overflow-hidden border border-gray-200">
+            <img class="w-full h-auto" 
+                 src="https://placehold.co/1200x600/e0e7ff/4338ca?text=DASHBOARD+PREVIEW+-+Key+Performance+Indicators" 
+                 alt="Mockup of the AttendEase Dashboard Interface"
+                 onerror="this.onerror=null; this.src='https://placehold.co/1200x600/e0e7ff/4338ca?text=DASHBOARD+PREVIEW';"
+            >
+        </div>
+    </section>
+
+    <!-- 2. Students Preview -->
+    <section id="students-section" class="bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 rounded-xl shadow-lg mt-8">
+        <div class="preview-header">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Student Management</h2>
+            <p class="text-gray-500">Efficiently manage student profiles, contact information, and attendance history.</p>
+        </div>
+        <div class="relative max-w-6xl mx-auto rounded-xl shadow-2xl overflow-hidden border border-gray-200">
+            <img class="w-full h-auto" 
+                 src="https://placehold.co/1200x600/f3f4f6/1f2937?text=STUDENTS+PREVIEW+-+Roster+and+Details" 
+                 alt="Mockup of the Students Management Interface"
+                 onerror="this.onerror=null; this.src='https://placehold.co/1200x600/f3f4f6/1f2937?text=STUDENTS+PREVIEW';"
+            >
+        </div>
+    </section>
+
+    <!-- 3. Teachers Preview -->
+    <section id="teachers-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mt-8">
+        <div class="preview-header">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Teacher & Staff Roster</h2>
+            <p class="text-gray-500">Organize teaching staff, assign courses, and monitor classroom schedules.</p>
+        </div>
+        <div class="relative max-w-6xl mx-auto rounded-xl shadow-2xl overflow-hidden border border-gray-200">
+            <img class="w-full h-auto" 
+                 src="https://placehold.co/1200x600/e0e7ff/4338ca?text=TEACHERS+PREVIEW+-+Staff+and+Assignments" 
+                 alt="Mockup of the Teachers Management Interface"
+                 onerror="this.onerror=null; this.src='https://placehold.co/1200x600/e0e7ff/4338ca?text=TEACHERS+PREVIEW';"
+            >
+        </div>
+    </section>
+
+    <!-- 4. Subjects Preview -->
+    <section id="subjects-section" class="bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 rounded-xl shadow-lg mt-8">
+        <div class="preview-header">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Subject & Course Catalog</h2>
+            <p class="text-gray-500">Maintain a clean catalog of all academic subjects and manage course details.</p>
+        </div>
+        <div class="relative max-w-6xl mx-auto rounded-xl shadow-2xl overflow-hidden border border-gray-200">
+            <img class="w-full h-auto" 
+                 src="https://placehold.co/1200x600/f3f4f6/1f2937?text=SUBJECTS+PREVIEW+-+Course+Structure" 
+                 alt="Mockup of the Subjects Management Interface"
+                 onerror="this.onerror=null; this.src='https://placehold.co/1200x600/f3f4f6/1f2937?text=SUBJECTS+PREVIEW';"
+            >
+        </div>
+    </section>
+
+    <!-- 5. About Preview (Replaced Reports) -->
+    <section id="about-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mt-8">
+        <div class="preview-header">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">About AttendEase</h2>
+            <p class="text-gray-500">Learn about our mission to revolutionize school administration and attendance tracking.</p>
+        </div>
+        <div class="relative max-w-6xl mx-auto rounded-xl shadow-2xl overflow-hidden border border-gray-200">
+            <img class="w-full h-auto" 
+                 src="https://placehold.co/1200x600/e0e7ff/4338ca?text=ABOUT+US+-+Our+Vision+and+Team" 
+                 alt="Mockup of the About Us page"
+                 onerror="this.onerror=null; this.src='https://placehold.co/1200x600/e0e7ff/4338ca?text=ABOUT+US';"
+            >
+        </div>
+    </section>
+
+
+    <!-- Footer (Simple) -->
+    <footer class="bg-white border-t border-gray-100 mt-20">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
+            &copy; 2025 AttendEase. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- JavaScript for Menu Toggles and Nav Swapping -->
+    <script>
+        const toggleAuthButton = document.getElementById('toggle-auth-button');
+        const authIcon = document.getElementById('auth-icon');
+        const navLinks = document.getElementById('nav-links');
+        const inlineLoginForm = document.getElementById('inline-login-form');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        const ICON_SIGN_IN = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-18 4h3m4-3a7 7 0 1110 0v1h-17v-1a7 7 0 017 7z"/>';
+        const ICON_CLOSE = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+
+
+        function updateDesktopView(isLoginFormVisible) {
+            // Only apply this logic on desktop (sm breakpoint and above)
+            if (window.innerWidth >= 640) {
+                if (isLoginFormVisible) {
+                    // Switch to Login View
+                    navLinks.classList.add('hidden');
+                    inlineLoginForm.classList.remove('hidden');
+                    inlineLoginForm.classList.add('flex'); // Show inline form
+                    authIcon.innerHTML = ICON_CLOSE; // Change icon to 'X'
+
+                    // Focus on the first field when form opens
+                    document.getElementById('email')?.focus();
+                    
+                } else {
+                    // Switch back to Nav View
+                    inlineLoginForm.classList.add('hidden');
+                    inlineLoginForm.classList.remove('flex'); // Hide inline form
+                    navLinks.classList.remove('hidden');
+                    authIcon.innerHTML = ICON_SIGN_IN; // Change icon to 'Sign In'
+                }
+            }
+        }
+
+
+        // --- Toggle Handler ---
+        toggleAuthButton.addEventListener('click', function() {
+            // Check current state based on visibility of nav links
+            const isNavVisible = !navLinks.classList.contains('hidden');
+
+            // If nav is visible (initial state), switch to login form
+            if (isNavVisible) {
+                updateDesktopView(true);
+            } else {
+                // If login form is visible, switch back to nav
+                updateDesktopView(false);
+            }
+        });
+
+        // --- Mobile Menu Toggle Script (Hamburger Menu) ---
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            
+            // Ensure desktop login form is closed if mobile menu opens
+            if (!mobileMenu.classList.contains('hidden')) {
+                updateDesktopView(false); 
+            }
+        });
+        
+        // Close mobile menu if a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Initialize state on page load (ensure nav is visible on desktop)
+        window.addEventListener('load', () => {
+             if (window.innerWidth >= 640) {
+                // Ensure the main dynamic container is displayed as flex on desktop
+                document.getElementById('dynamic-content-container').classList.add('flex');
+            }
+            updateDesktopView(false);
+        });
+
+        // Re-run setup on resize to handle mobile/desktop switching gracefully
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 640) {
+                // Desktop view logic
+                 document.getElementById('dynamic-content-container').classList.add('flex');
+            } else {
+                // Mobile view logic: Ensure login form is closed and desktop nav is hidden
+                document.getElementById('dynamic-content-container').classList.remove('flex');
+                updateDesktopView(false); 
+            }
+        });
+    </script>
+</body>
+</html>
