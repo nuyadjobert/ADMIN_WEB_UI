@@ -126,6 +126,16 @@
   padding: 0.5rem; /* small spacing around images */
 }
 
+    /* Hides scrollbar for Chrome, Safari and Opera */
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hides scrollbar for IE, Edge and Firefox */
+    .scrollbar-hide {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
 
     </style>
 </head>
@@ -320,73 +330,86 @@ AttendEase is the smart platform for seamless student attendance tracking,teache
                 </a>
             </div>
         </div>
-    <section id="contacts-section" class="bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 rounded-xl shadow-lg mt-8">
-    <div class="preview-header">
+<section id="contacts-section" class="bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 rounded-xl shadow-lg mt-8">
+    <div class="preview-header text-center">
         <h2 class="text-3xl font-bold text-gray-900 mb-2">Get In Touch</h2>
-        <p class="text-gray-500">Reach out directly to our contact personnel or send us a message.</p>
+        <p class="text-gray-500">Reach out directly to our contact personnel.</p>
     </div>
-    
-    <div class="flex flex-col md:flex-row gap-12 max-w-5xl mx-auto">
-        <!-- Left Column: Contact Personnel -->
-        <div class="md:w-1/2 flex flex-col gap-6">
 
-            <!-- Contact 1 -->
-            <div class="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition w-full">
-                <svg class="w-8 h-8 text-indigo-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v6m-8-6v6m4-6v6"/>
-                </svg>
-                <div class="flex flex-col text-gray-800">
-                    <p class="font-semibold flex items-center"><svg class="w-5 h-5 mr-1 text-indigo-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>RODGIE A. FEDERIO</p>
-                    <p class="text-sm flex items-center"><svg class="w-4 h-4 mr-1 text-indigo-500" fill="currentColor" viewBox="0 0 24 24"><path d="M3 5.25C3 4.01 4.01 3 5.25 3h13.5C19.99 3 21 4.01 21 5.25v13.5c0 1.24-1.01 2.25-2.25 2.25H5.25C4.01 21 3 19.99 3 18.75V5.25zM12 12l8-5V18H4V7l8 5z"/></svg>09811453289</p>
-                    <p class="text-sm flex items-center"><svg class="w-4 h-4 mr-1 text-indigo-500" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18a2 2 0 002 2h16a2 2 0 002-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>rod101004@gmail.com</p>
+    <div class="relative w-full py-10">
+
+        <button id="scroll-left" class="absolute left-0 top-1/2 -mt-10 transform -translate-x-1/2 -translate-y-1/2 bg-white/70 hover:bg-white p-3 rounded-full shadow-lg z-10 hidden md:block transition">
+            <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+
+        <div id="card-carousel" class="w-full overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory px-4 md:px-12">
+            
+            <div class="flex space-x-12 w-[2000px] mx-auto justify-start">
+
+                <div class="contact-card relative flex-shrink-0 flex flex-col justify-end overflow-hidden rounded-xl shadow-2xl transition-transform duration-500 ease-in-out w-80 h-96 transform scale-60 snap-center">
+                    <img src="rodgie.jpg" alt="RODGIE A. FEDERIO" class="absolute inset-0 w-full h-full object-cover filter brightness-75">
+                    <div class="relative p-6 text-white bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent">
+                        <div class="flex flex-col items-center text-center">
+                            <h3 class="text-xl font-bold">RODGIE A. FEDERIO</h3>
+                            <p class="text-md text-indigo-300 mt-2">09811453289</p>
+                            <p class="text-md text-indigo-300">rod101004@gmail.com</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Contact 2 -->
-            <div class="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition w-full">
-                <svg class="w-8 h-8 text-indigo-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v6m-8-6v6m4-6v6"/>
-                </svg>
-                <div class="flex flex-col text-gray-800">
-                    <p class="font-semibold flex items-center"><svg class="w-5 h-5 mr-1 text-indigo-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>JAYSON D. BUTAWAN</p>
-                    <p class="text-sm flex items-center"><svg class="w-4 h-4 mr-1 text-indigo-500" fill="currentColor" viewBox="0 0 24 24"><path d="M3 5.25C3 4.01 4.01 3 5.25 3h13.5C19.99 3 21 4.01 21 5.25v13.5c0 1.24-1.01 2.25-2.25 2.25H5.25C4.01 21 3 19.99 3 18.75V5.25zM12 12l8-5V18H4V7l8 5z"/></svg>09764001459</p>
-                    <p class="text-sm flex items-center"><svg class="w-4 h-4 mr-1 text-indigo-500" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18a2 2 0 002 2h16a2 2 0 002-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>jaysonbutawan2@gmail.com</p>
+                <div class="contact-card relative flex-shrink-0 flex flex-col justify-end overflow-hidden rounded-xl shadow-2xl transition-transform duration-500 ease-in-out w-80 h-96 transform scale-100 snap-center">
+                    <img src="jayson.jpg" alt="JAYSON D. BUTAWAN" class="absolute inset-0 w-full h-full object-cover filter brightness-75">
+                    <div class="relative p-6 text-white bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent">
+                        <div class="flex flex-col items-center text-center">
+                            <h3 class="text-xl font-bold">JAYSON D. BUTAWAN</h3>
+                            <p class="text-md text-indigo-300 mt-2">09764001459</p>
+                            <p class="text-md text-indigo-300">jaysonbutawan2@gmail.com</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Contact 3: You -->
-            <div class="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition w-full">
-                <svg class="w-8 h-8 text-indigo-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v6m-8-6v6m4-6v6"/>
-                </svg>
-                <div class="flex flex-col text-gray-800">
-                    <p class="font-semibold flex items-center"><svg class="w-5 h-5 mr-1 text-indigo-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>JOBERT P. NOYAD</p>
-                    <p class="text-sm flex items-center"><svg class="w-4 h-4 mr-1 text-indigo-500" fill="currentColor" viewBox="0 0 24 24"><path d="M3 5.25C3 4.01 4.01 3 5.25 3h13.5C19.99 3 21 4.01 21 5.25v13.5c0 1.24-1.01 2.25-2.25 2.25H5.25C4.01 21 3 19.99 3 18.75V5.25zM12 12l8-5V18H4V7l8 5z"/></svg>09911543308</p>
-                    <p class="text-sm flex items-center"><svg class="w-4 h-4 mr-1 text-indigo-500" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18a2 2 0 002 2h16a2 2 0 002-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>jobertnoyad93@gmail.com</p>
+                <div class="contact-card relative flex-shrink-0 flex flex-col justify-end overflow-hidden rounded-xl shadow-2xl transition-transform duration-500 ease-in-out w-80 h-96 transform scale-60 snap-center">
+                    <img src="jobert.jpg" alt="JOBERT P. NOYAD" class="absolute inset-0 w-full h-full object-cover filter brightness-75">
+                    <div class="relative p-6 text-white bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent">
+                        <div class="flex flex-col items-center text-center">
+                            <h3 class="text-xl font-bold">JOBERT P. NOYAD</h3>
+                            <p class="text-md text-indigo-300 mt-2">09911543308</p>
+                            <p class="text-md text-indigo-300">jobertnoyad93@gmail.com</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                
+                <div class="contact-card relative flex-shrink-0 flex flex-col justify-end overflow-hidden rounded-xl shadow-2xl transition-transform duration-500 ease-in-out w-80 h-96 transform scale-60 snap-center">
+                    <img src="example1.jpg" alt="EXAMPLE 1" class="absolute inset-0 w-full h-full object-cover filter brightness-75">
+                    <div class="relative p-6 text-white bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent">
+                        <div class="flex flex-col items-center text-center">
+                            <h3 class="text-xl font-bold">EXAMPLE 1</h3>
+                            <p class="text-md text-indigo-300 mt-2">09123456789</p>
+                            <p class="text-md text-indigo-300">example1@example.com</p>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="contact-card relative flex-shrink-0 flex flex-col justify-end overflow-hidden rounded-xl shadow-2xl transition-transform duration-500 ease-in-out w-80 h-96 transform scale-60 snap-center">
+                    <img src="example2.jpg" alt="EXAMPLE 2" class="absolute inset-0 w-full h-full object-cover filter brightness-75">
+                    <div class="relative p-6 text-white bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent">
+                        <div class="flex flex-col items-center text-center">
+                            <h3 class="text-xl font-bold">EXAMPLE 2</h3>
+                            <p class="text-md text-indigo-300 mt-2">09987654321</p>
+                            <p class="text-md text-indigo-300">example2@example.com</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
         </div>
+        
+        <button id="scroll-right" class="absolute right-0 top-1/2 -mt-10 transform translate-x-1/2 -translate-y-1/2 bg-white/70 hover:bg-white p-3 rounded-full shadow-lg z-10 hidden md:block transition">
+            <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
 
-        <!-- Right Column: Send a Message Form -->
-        <div class="md:w-1/2">
-            <div class="bg-indigo-50 p-6 rounded-xl shadow-lg">
-                <h3 class="text-xl font-semibold text-gray-800 mb-4">Send Us a Message</h3>
-                <form onsubmit="event.preventDefault(); alert('Message Sent!');" class="space-y-4">
-                    <input type="text" placeholder="Your Name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <input type="email" placeholder="Your Email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <textarea placeholder="Your Message" rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
-                    <button type="submit" 
-        class="w-full px-4 py-3 text-white font-semibold rounded-lg shadow-lg bg-indigo-600 hover:bg-indigo-700 transition duration-150">
-    Submit Inquiry
-</button>
-
-                </form>
-            </div>
-        </div>
     </div>
 </section>
-
     <section id="about-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mt-8">
         <div class="preview-header">
             <h2 class="text-3xl font-bold text-gray-900 mb-2">About AttendEase</h2>
@@ -561,8 +584,95 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+// --- START: Contact Carousel Logic ---
+document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.getElementById('card-carousel');
+    const cards = document.querySelectorAll('.contact-card');
+    const scrollLeftBtn = document.getElementById('scroll-left');
+    const scrollRightBtn = document.getElementById('scroll-right');
+
+    // --- 1. CENTER-SCALING LOGIC ---
+    const updateCardSizes = () => {
+        // Find the center of the visible scroll area
+        const containerCenter = carousel.scrollLeft + (carousel.offsetWidth / 2);
+        
+        // Define a tight center detection threshold (e.g., 100px)
+        const CENTER_THRESHOLD = 100; 
+
+        cards.forEach(card => {
+            // Find the center of the current card's scaled position
+            const cardCenter = card.offsetLeft + (card.offsetWidth * 0.5); 
+            const distance = Math.abs(containerCenter - cardCenter);
+
+            if (distance < CENTER_THRESHOLD) {
+                // Card is in the center: Make it LARGE (100% size)
+                card.classList.remove('scale-60'); 
+                card.classList.add('scale-100'); 
+                card.style.opacity = '1';
+                card.style.zIndex = '10'; // Bring the center card forward
+            } else {
+                // Card is on the sides: Make it SMALL (60% size)
+                card.classList.remove('scale-100');
+                card.classList.add('scale-60'); 
+                card.style.opacity = '0.7'; 
+                card.style.zIndex = '1';
+            }
+        });
+    };
+
+    // --- 2. NAVIGATION BUTTON LOGIC (Fixed for smoother scrolling) ---
+    const scrollCard = (direction) => {
+        // Card width is 320px (w-80). space-x-12 is 48px. Total step: 368px
+        const cardScrollAmount = 368; 
+        
+        if (direction === 'right') {
+            carousel.scrollBy({ left: cardScrollAmount, behavior: 'smooth' });
+        } else {
+            carousel.scrollBy({ left: -cardScrollAmount, behavior: 'smooth' });
+        }
+    };
+
+    // Attach event listeners to the arrow buttons
+    scrollLeftBtn.addEventListener('click', () => scrollCard('left'));
+    scrollRightBtn.addEventListener('click', () => scrollCard('right'));
 
 
-    </script>
+    // --- 3. INITIALIZATION (The Fix) ---
+    const initialCenter = () => {
+        // We want Jayson (index 1) to start centered
+        const cardToCenterIndex = 1; 
+        
+        if (cards.length > cardToCenterIndex) {
+            const cardToCenter = cards[cardToCenterIndex];
+            const cardOffsetLeft = cardToCenter.offsetLeft;
+            const cardWidth = cardToCenter.offsetWidth;
+            const containerWidth = carousel.offsetWidth;
+            
+            // Calculate scroll position to center the card
+            const scrollPosition = cardOffsetLeft - (containerWidth / 2) + (cardWidth / 2);
+            
+            // Use setTimeout to ensure Tailwind CSS has initialized fully
+            setTimeout(() => {
+                carousel.scrollLeft = scrollPosition;
+                // Force the scaling update immediately after positioning
+                updateCardSizes(); 
+            }, 100); // 100ms delay ensures DOM and styles are rendered
+        } else {
+            updateCardSizes(); 
+        }
+    };
+
+    // Listen for user scrolling
+    carousel.addEventListener('scroll', updateCardSizes);
+    
+    // Re-center on resize
+    window.addEventListener('resize', initialCenter); 
+    
+    // Run initial setup immediately after the DOM is ready
+    initialCenter();
+
+});
+// --- END: Contact Carousel Logic ---
+</script>
 </body>
 </html>
