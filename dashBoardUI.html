@@ -101,6 +101,26 @@
             transition: background-color 0.15s;
         }
 
+        /* Initial hidden state for stats cards */
+/* Initial hidden state for stats cards */
+.stat-card {
+    opacity: 0;
+    transform: translateY(20px); /* Only vertical movement */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Only animate opacity & vertical */
+}
+
+/* Animated state */
+.stat-card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hover effect */
+.stat-card:hover {
+    transform: translateY(-5px); /* Only vertical hover effect */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
     </style>
 </head>
 <body class="antialiased">
@@ -239,13 +259,159 @@
             </div>
         </div>
 
+
+     <!-- Create Room Section -->
+<div class="mt-10 bg-white shadow-lg rounded-xl p-6 border border-gray-200">
+
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Create New Room</h2>
+    <p class="text-gray-500 mb-6">Set the room details including schedule and allocated time for attendance validation.</p>
+
+    <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Room Name -->
+<div class="flex flex-col">
+    <label class="text-gray-700 font-medium mb-1">
+        Room Name <span class="text-red-500">*</span>
+    </label>
+    <input 
+        type="text" 
+        placeholder="Enter room name" 
+        class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        required
+    >
+</div>
+
+<!-- Room Description -->
+<div class="flex flex-col">
+    <label class="text-gray-700 font-medium mb-1">
+        Room Description <span class="text-red-500">*</span>
+    </label>
+    <input 
+        type="text" 
+        placeholder="Enter room description" 
+        class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        required
+    >
+</div>
+
+<!-- START TIME -->
+<div class="flex flex-col">
+    <label class="text-gray-700 font-medium mb-1">
+        START TIME <span class="text-red-500">*</span>
+    </label>
+    <input 
+        type="time" 
+        class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        required
+    >
+</div>
+
+<!-- END TIME -->
+<div class="flex flex-col">
+    <label class="text-gray-700 font-medium mb-1">
+        END TIME <span class="text-red-500">*</span>
+    </label>
+    <input 
+        type="time" 
+        class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        required
+    >
+</div>
+
+<!-- Allocated Time (minutes) -->
+<div class="flex flex-col">
+    <label class="text-gray-700 font-medium mb-1">
+        Allocated Time (Minutes) <span class="text-red-500">*</span>
+    </label>
+    <input 
+        type="number" 
+        placeholder="e.g., 15 minutes" 
+        class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        required
+    >
+</div>
+
+<!-- Department Spinner -->
+<div class="flex flex-col">
+    <label class="text-gray-700 font-medium mb-1">
+        Department <span class="text-red-500">*</span>
+    </label>
+    <select
+        class="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        required
+    >
+        <option value="">Select Department</option>
+        <option>BSIT</option>
+        <option>BSHM</option>
+        <option>BSBA</option>
+        <option>BSED</option>
+        <option>BEED</option>
+        <option>BTVTED</option>
+        <option>BSA</option>
+        <option>BSMT</option>
+        <option>BSN</option>
+    </select>
+</div>
+
+
+    </form>
+
+    <!-- Create Room Button -->
+    <div class="mt-6">
+<button id="createRoomBtn" class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition">
+            + Create Room
+        </button>
+    </div>
+</div>
+
+<!-- Google Maps Section (hidden until Create Room is clicked) -->
+<div id="mapContainer" class="mt-10 w-full h-[500px] hidden relative">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Draw Room Area</h2>
+
+    <!-- Save Button -->
+    <div class="absolute top-0 right-0 mt-2 mr-2 z-10">
+        <button id="saveMapBtn" class="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition">
+            Save
+        </button>
+    </div>
+
+    <!-- Map -->
+    <div id="map" class="w-full h-full rounded-xl border"></div>
+</div>
+
+
+
+<!-- Room Location Map (Image Placeholder) -->
+<div id="roomMapContainer" class="mb-10 mt-10 w-full h-[450px] hidden">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Room Location (Map)</h2>
+    <div class="w-full h-full bg-gray-200 rounded-xl overflow-hidden shadow-lg relative">
+        <!-- Fake Map Image -->
+        <img 
+            src="maps.jpg" 
+            class="w-full h-full object-cover opacity-90" 
+            alt="Room Location Map"
+        >
+        <!-- Overlay Toolbar (optional) -->
+        <div class="absolute top-4 right-4 bg-white shadow-md rounded-lg p-3 flex gap-2">
+            <button class="px-3 py-1 bg-blue-600 text-white rounded text-sm">Polygon</button>
+            <button class="px-3 py-1 bg-gray-100 rounded text-sm">Hand</button>
+            <button class="px-3 py-1 bg-gray-100 rounded text-sm">Layers</button>
+        </div>
+        <!-- Zoom Buttons -->
+        <div class="absolute bottom-4 right-4 flex flex-col">
+            <button class="w-10 h-10 bg-white shadow rounded-t-lg flex items-center justify-center text-xl">+</button>
+            <button class="w-10 h-10 bg-white shadow rounded-b-lg flex items-center justify-center text-xl">−</button>
+        </div>
+    </div>
+</div>
+
+
         <!-- ---------------------------------------------------- -->
         <!-- 2. Pending Approvals Section (Covers both Teacher and Student) -->
         <!-- The ID remains #approvals for the Reports link to function correctly -->
         <!-- ---------------------------------------------------- -->
-        <h2 id="approvals" class="text-2xl font-bold text-gray-800 mb-6 border-b pb-3">Action Required: Pending Approvals (15 Total)</h2>
+<h2 id="approvals" class="text-2xl font-bold text-gray-800 mt-20 mb-10 border-b pb-3">Action Required: Pending Approvals (15 Total)</h2>
         
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-20">
             
             <!-- Pending Teacher Registrations -->
             <div class="bg-white p-6 rounded-xl shadow-xl border border-yellow-100">
@@ -504,6 +670,25 @@
             // Setup for Student Approvals
             setupBatchApproval('student-select-all', 'student-approval-checkbox', 'student-approve-selected-btn');
         });
-    </script>
+// Show the room map image when Create Room is clicked
+document.getElementById("createRoomBtn").addEventListener("click", () => {
+    // Show the room map container
+    document.getElementById("roomMapContainer").classList.remove("hidden");
+});
+
+// Animate stat cards on page load
+function animateStatCards() {
+    const cards = document.querySelectorAll('.stat-card');
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            if (!card.classList.contains('show')) { // Prevent reapplying
+                card.classList.add('show');
+            }
+        }, index * 150);
+    });
+}
+window.addEventListener('load', animateStatCards);
+
+</script>
 </body>
 </html>

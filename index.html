@@ -137,6 +137,30 @@
         scrollbar-width: none;  /* Firefox */
     }
 
+/* Animation for scaling cards on scroll */
+.contact-card {
+    transform: scale(0.8);
+    opacity: 0;
+    transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.contact-card.visible {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.contact-card {
+    transition: transform 0.4s ease, filter 0.4s ease;
+    filter: blur(4px);
+    transform: scale(0.8);
+}
+
+.contact-card.active-card {
+    filter: blur(0px);
+    transform: scale(1);
+    z-index: 10;
+}
+
     </style>
 </head>
 <body class="antialiased">
@@ -673,6 +697,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 // --- END: Contact Carousel Logic ---
+
+document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll(".contact-card");
+
+    const observer = new IntersectionObserver(
+        entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                }
+            });
+        },
+        { threshold: 0.3 } // triggers animation when 30% of card is visible
+    );
+
+    cards.forEach(card => observer.observe(card));
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll(".contact-card");
+    const carousel = document.getElementById("card-carousel");
+
+    function updateActiveCard() {
+        let center = carousel.scrollLeft + carousel.offsetWidth / 2;
+
+        let closestCard = null;
+        let closestDistance = Infinity;
+
+        cards.forEach(card => {
+            const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+            const distance = Math.abs(center - cardCenter);
+
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestCard = card;
+            }
+        });
+
+        cards.forEach(card => card.classList.remove("active-card"));
+        closestCard.classList.add("active-card");
+    }
+
+    updateActiveCard();  
+    carousel.addEventListener("scroll", updateActiveCard);
+
+    // If you use arrow buttons
+    document.getElementById("scroll-left")?.addEventListener("click", () => {
+        carousel.scrollBy({ left: -300, behavior: "smooth" });
+        setTimeout(updateActiveCard, 400);
+    });
+    document.getElementById("scroll-right")?.addEventListener("click", () => {
+        carousel.scrollBy({ left: 300, behavior: "smooth" });
+        setTimeout(updateActiveCard, 400);
+    });
+});
+
 </script>
 </body>
 </html>
