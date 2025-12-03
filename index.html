@@ -434,34 +434,33 @@ AttendEase is the smart platform for seamless student attendance tracking,teache
 
     </div>
 </section>
-    <section id="about-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mt-8">
-        <div class="preview-header">
-            <h2 class="text-3xl font-bold text-gray-900 mb-2">About AttendEase</h2>
-            <p class="text-gray-500">Learn about our mission to revolutionize school administration and attendance tracking.</p>
+<section id="about-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mt-8">
+    <div class="preview-header">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">About AttendEase</h2>
+        <p class="text-gray-500">Learn about our mission to revolutionize school administration and attendance tracking.</p>
+    </div>
+
+    <div class="flex flex-col lg:flex-row-reverse gap-12 max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+        
+        <div class="lg:w-1/2 p-4 flex justify-center">
+            <img src="team1.jpg" 
+                 alt="Photo of the AttendEase core development team" 
+                 class="w-full h-auto rounded-xl shadow-2xl border border-gray-200">
         </div>
 
-        <div class="flex flex-col lg:flex-row-reverse gap-12 max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-lg">
-            
-            <div class="lg:w-1/2 p-4 flex justify-center">
-                <img src="team1.jpg" 
-                     alt="Photo of the AttendEase core development team" 
-                     class="w-full h-auto rounded-xl shadow-2xl border border-gray-200">
-            </div>
+        <div class="lg:w-1/2 p-4 space-y-6">
 
-           <div class="lg:w-1/2 p-4 space-y-6">
-    <h3 class="text-2xl font-semibold primary-text mb-4">System Overview</h3>
-    <p class="text-gray-600">
-        The AttendEase System is an Android mobile application developed using Kotlin, designed for both teachers and students to streamline attendance management. It integrates Firebase Authentication for secure user login, Firebase Realtime Database for storing schedules, attendance, and reports, and ZXing for QR code generation and scanning. Classroom locations are validated using FusedLocationProviderClient, which compares student GPS coordinates against pre-defined classroom geofenced boundaries.
-    </p>
-    
-    <h3 class="text-2xl font-semibold primary-text mb-4 pt-4 border-t border-gray-100">Acknowledgements</h3>
-    <p class="text-gray-600">
-        A big thank you goes to our co-researcher for their hard work, valuable help, and dedication. Without their contribution, this project wouldn’t have been the same. We’re also thankful to our friends and family for always supporting us, encouraging us, and understanding us. Their help kept us going through the tough times.
-    </p>
-</div>
+            <h3 class="text-2xl font-semibold primary-text mb-4">System Overview</h3>
+            <p id="typewriter1" class="text-gray-600 min-h-[160px]"></p>
+
+            <h3 class="text-2xl font-semibold primary-text mb-4 pt-4 border-t border-gray-100">Acknowledgements</h3>
+            <p id="typewriter2" class="text-gray-600 min-h-[150px]"></p>
 
         </div>
-    </section>
+
+    </div>
+</section>
+
 
 
     <footer class="bg-white border-t border-gray-100 mt-20">
@@ -751,6 +750,56 @@ document.addEventListener("DOMContentLoaded", () => {
         carousel.scrollBy({ left: 300, behavior: "smooth" });
         setTimeout(updateActiveCard, 400);
     });
+});
+
+// Paragraph texts
+const text1 =
+"The AttendEase System is an Android mobile application developed using Kotlin, " +
+"designed for both teachers and students to streamline attendance management. " +
+"It integrates Firebase Authentication for secure user login, Firebase Realtime Database " +
+"for storing schedules, attendance, and reports, and ZXing for QR code generation and scanning. " +
+"Classroom locations are validated using FusedLocationProviderClient, which compares student GPS coordinates " +
+"against pre-defined classroom geofenced boundaries.";
+
+const text2 =
+"A big thank you goes to our co-researcher for their hard work, valuable help, and dedication. " +
+"Without their contribution, this project wouldn’t have been the same. We’re also thankful to our friends " +
+"and family for always supporting us, encouraging us, and understanding us. Their help kept us going through the tough times.";
+
+// Typing speed
+const speed = 20;
+
+// Typing function
+function typeWriter(elementId, text, callback) {
+    let i = 0;
+    function typing() {
+        if (i < text.length) {
+            document.getElementById(elementId).innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        } else if (callback) {
+            callback();
+        }
+    }
+    typing();
+}
+
+// Trigger only once when section is visible
+let hasTyped = false;
+
+window.addEventListener("scroll", () => {
+    const section = document.getElementById("about-section");
+    const rect = section.getBoundingClientRect();
+
+    if (!hasTyped && rect.top < window.innerHeight - 100) {
+        hasTyped = true;
+
+        typeWriter("typewriter1", text1, () => {
+            setTimeout(() => {
+                typeWriter("typewriter2", text2);
+            }, 300);
+        });
+    }
 });
 
 </script>

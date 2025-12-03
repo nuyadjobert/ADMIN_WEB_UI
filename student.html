@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AttendEase Room/Subject Assignment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles & Utility Classes (Copied from your provided code) */
+        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; }
+        .primary-color-bg { background-color: #4f46e5; }
+        .primary-color-text { color: #4f46e5; }
+        .hover-primary-bg:hover { background-color: #4338ca; }
+        .border-primary { border-color: #4f46e5; }
+        .ring-primary { ring-color: #4f46e5; }
+        .panel { 
+            background-color: #ffffff; 
+            border-radius: 1rem; 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
+            padding: 1.5rem; 
+        }
+        .assignment-item { border-left: 5px solid transparent; transition: all 0.2s ease; padding: 1rem; border-radius: 0.75rem;}
+        .assignment-item.active { background-color: #eef2ff; border-left-color: #4f46e5; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+        .roster-student-item, .available-student-item { border: 1px solid #e5e7eb; padding: 1rem; border-radius: 0.75rem; }
+        .form-checkbox { /* Simplified Checkbox style */ appearance: none; cursor: pointer; width: 1.35rem; height: 1.35rem; border-radius: 0.35rem; border: 2px solid #9ca3af; transition: all 0.2s ease; }
+        .form-checkbox:checked { background-color: #4f46e5; border-color: #4f46e5; background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 00-1.414 0L7 8.586 4.207 5.793a1 1 0 00-1.414 1.414l3.5 3.5a1 1 0 001.414 0l5-5a1 1 0 000-1.414z'/%3e%3c/svg%3e"); background-size: 100% 100%; background-position: center; background-repeat: no-repeat; }
+        
+        /* New Nav Styles based on images */
+        .nav-link {
+            padding: 0.75rem 1.25rem;
+            color: #6b7280; /* Gray-500 */
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .nav-link:hover {
+            color: #111827; /* Gray-900 */
+        }
+        .nav-link.active {
+            color: #4f46e5; /* Primary Color */
+            border-bottom-color: #4f46e5;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+   <header class="sticky top-0 bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-stretch justify-between h-16">
+             <div class="flex-shrink-0 flex items-center">
+                    <div class="w-8 h-8 flex items-center justify-center primary-color-bg rounded-lg shadow-md">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m2 10V7m2 10V7m2 10V7M12 21a9 9 0 01-9-9 9 9 0 019-9 9 9 0 019 9 9 9 0 01-9 9z"/></svg>
+                    </div>
+                    <span class="ml-3 text-xl font-bold text-gray-900 tracking-tight">AttendEase Admin</span>
+                </div>
+                
+                <nav class="flex h-full items-stretch -mb-px space-x-2 sm:space-x-4">
+                    <a href="dashBoardUI.html" class="nav-link active">
+                       <span class="text-sm">User Management</span> 
+                    </a>
+                    <a href="#" class="nav-link">
+                        <span class="text-sm">Teacher</span>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <span class="text-sm">Student</span>
+                    </a>
+                    <a href="#" class="nav-link relative">
+                        <span class="text-sm">Reports</span>
+                        <span class="ml-2 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white bg-red-500 rounded-full">15</span>
+                        </span>
+                    </a>
+                </nav>
+
+                <div class="flex items-center">
+                    <button class="text-gray-400 hover:text-gray-600 focus:outline-none p-2 rounded-full hover:bg-gray-100 transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-2">Subject/Room Assignment Manager 📝</h1>
+        <p class="text-gray-500 mb-8">Manually assign students to created rooms/subjects and manage class rosters.</p>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <div class="panel">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-3">📚 Select Room/Subject Instance</h3>
+                
+                <div class="space-y-4 mb-6">
+                    <input type="text" id="subject-search" placeholder="Search room name, time, or department..." class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none transition">
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <select id="subject-dept-filter" class="col-span-1 px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none">
+                            <option value="">Filter by Dept (All)</option>
+                            <option value="BSIT">BSIT</option>
+                            <option value="BSHM">BSHM</option>
+                            <option value="BSBA">BSBA</option>
+                            <option value="BSED">BSED</option>
+                        </select>
+                        <select id="subject-category-filter" class="col-span-1 px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none">
+                            <option value="">Filter by Category (All)</option>
+                            <option value="GE">General Education (GE)</option>
+                            <option value="Major">Major Subject</option>
+                            <option value="Elective">Elective</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="text-sm font-semibold text-gray-600 mb-3 ml-1">Available Rooms:</div> <div id="subject-assignment-list" class="space-y-3 max-h-[500px] overflow-y-auto pr-1">
+
+                    <div 
+                        data-room-id="C301A" 
+                        data-room-name="C301: Data Structures" 
+                        data-dept="BSIT" 
+                        data-level="4th" 
+                        data-category="Major" 
+                        data-capacity="60" 
+                        data-assigned="45" 
+                        data-time="08:00 AM" 
+                        class="assignment-item active cursor-pointer"
+                    >
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="font-extrabold primary-color-text text-lg">C301: Data Structures <span class="text-sm text-gray-500 font-normal">(4th Yr, Major)</span></h4>
+                            <span class="text-sm font-semibold text-gray-700 primary-color-text">45/60 Assigned</span>
+                        </div>
+                        <div class="grid grid-cols-2 text-sm text-gray-600 gap-y-1">
+                            <div><span class="font-medium">Time:</span> 08:00 AM - 09:30 AM</div>
+                            <div><span class="font-medium">Department:</span> BSIT</div>
+                            <div class="col-span-2"><span class="font-medium">Attendance Time Limit:</span> 15 mins</div>
+                        </div>
+                    </div>
+                    
+                    <div 
+                        data-room-id="L102B" 
+                        data-room-name="L102: Advanced Writing" 
+                        data-dept="BSED" 
+                        data-level="1st" 
+                        data-category="GE" 
+                        data-capacity="40" 
+                        data-assigned="32" 
+                        data-time="10:00 AM" 
+                        class="assignment-item cursor-pointer hover:bg-gray-50"
+                    >
+                       <div class="flex justify-between items-start mb-1">
+                            <h4 class="font-extrabold text-gray-900 text-lg">L102: Advanced Writing <span class="text-sm text-gray-500 font-normal">(1st Yr, GE)</span></h4>
+                            <span class="text-sm font-semibold text-gray-500">32/40 Assigned</span>
+                        </div>
+                        <div class="grid grid-cols-2 text-sm text-gray-600 gap-y-1">
+                            <div><span class="font-medium">Time:</span> 10:00 AM - 11:30 AM</div>
+                            <div><span class="font-medium">Department:</span> BSED</div>
+                            <div class="col-span-2"><span class="font-medium">Attendance Time Limit:</span> 10 mins</div>
+                        </div>
+                    </div>
+                     <div 
+                        data-room-id="H303C" 
+                        data-room-name="H303: Tourism Management" 
+                        data-dept="BSHM" 
+                        data-level="3rd" 
+                        data-category="Major" 
+                        data-capacity="50" 
+                        data-assigned="20" 
+                        data-time="01:00 PM" 
+                        class="assignment-item cursor-pointer hover:bg-gray-50"
+                    >
+                       <div class="flex justify-between items-start mb-1">
+                            <h4 class="font-extrabold text-gray-900 text-lg">H303: Tourism Management <span class="text-sm text-gray-500 font-normal">(3rd Yr, Major)</span></h4>
+                            <span class="text-sm font-semibold text-gray-500">20/50 Assigned</span>
+                        </div>
+                        <div class="grid grid-cols-2 text-sm text-gray-600 gap-y-1">
+                            <div><span class="font-medium">Time:</span> 01:00 PM - 02:30 PM</div>
+                            <div><span class="font-medium">Department:</span> BSHM</div>
+                            <div class="col-span-2"><span class="font-medium">Attendance Time Limit:</span> 15 mins</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 border-t pt-4">
+                    <button class="w-full px-4 py-2 text-sm text-indigo-600 border border-indigo-200 rounded-lg hover:bg-indigo-50 transition font-medium">
+                        Manage Room Details &rarr;
+                    </button>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-3 flex items-center justify-between">
+                    Students for:
+                    <span id="subject-roster-title" class="primary-color-text font-extrabold text-xl">C301: Data Structures</span>
+                </h3>
+                
+                <div class="flex border-b border-gray-200 mb-4 space-x-6">
+                    <button class="tab-button font-bold pb-2 border-b-2 tab-active primary-color-text border-primary" data-tab="roster">
+                        Current Roster (<span id="roster-count">45</span>)
+                    </button>
+                    <button class="tab-button font-medium text-gray-500 hover:text-gray-700 pb-2 border-b-2 border-transparent" data-tab="available">
+                        Students to Assign (<span id="available-count">120</span>)
+                    </button>
+                </div>
+
+                <div id="tab-content">
+                    
+                    <div id="tab-roster" class="tab-pane space-y-2 max-h-[400px] overflow-y-auto pr-1">
+                        <p class="text-gray-500 text-sm mb-3">Students currently assigned to this room/subject.</p>
+                        <input type="text" placeholder="Search student name or ID..." class="w-full px-4 py-2 border border-gray-300 rounded-xl mb-3 focus:ring-2 ring-primary focus:outline-none transition">
+
+                        <div class="roster-student-item flex justify-between items-center" data-dept="BSIT" data-year="4th">
+                            <div>
+                                <p class="font-medium text-gray-900">Alex Johnson</p>
+                                <p class="text-xs text-gray-500 mt-0.5">ID: 12345 | BSIT, 4th Year</p>
+                            </div>
+                            <button class="text-sm text-red-500 hover:text-red-700 action-button px-3 py-1 rounded-lg border border-red-200 hover:bg-red-50 transition">Remove</button>
+                        </div>
+                        <div class="roster-student-item flex justify-between items-center" data-dept="BSIT" data-year="4th">
+                            <div>
+                                <p class="font-medium text-gray-900">Liam O'Connell</p>
+                                <p class="text-xs text-gray-500 mt-0.5">ID: 12771 | BSIT, 4th Year</p>
+                            </div>
+                            <button class="text-sm text-red-500 hover:text-red-700 action-button px-3 py-1 rounded-lg border border-red-200 hover:bg-red-50 transition">Remove</button>
+                        </div>
+                        <div class="text-center text-sm text-gray-500 py-2">... 43 more students ...</div>
+                    </div>
+                    
+                    <div id="tab-available" class="tab-pane hidden">
+                        <p class="text-gray-500 text-sm mb-3">Filter and select eligible students to assign to the current room.</p>
+                        
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <select id="student-dept-filter" class="px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none">
+                                <option value="">Filter by Department (All)</option>
+                                <option value="BSIT">BS Information Technology</option>
+                                <option value="BSBA">BS Business Administration</option>
+                                <option value="BSHM">BS Hospitality Management</option>
+                            </select>
+                            <select id="student-year-filter" class="px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none">
+                                <option value="">Filter by Year Level (All)</option>
+                                <option value="4th">4th Year</option>
+                                <option value="3rd">3rd Year</option>
+                                <option value="2nd">2nd Year</option>
+                                <option value="1st">1st Year</option>
+                            </select>
+                        </div>
+
+                        <div class="flex justify-between items-center pb-3 border-b border-gray-200 mb-4">
+                            <label class="flex items-center space-x-3 text-sm text-gray-600 cursor-pointer font-medium">
+                                <input type="checkbox" id="student-select-all" class="form-checkbox">
+                                <span>Select All Visible</span>
+                            </label>
+                            <button id="add-selected-button" class="action-button px-5 py-2 text-sm rounded-xl text-white primary-color-bg hover-primary-bg font-semibold disabled:opacity-50 transition" disabled>
+                                Assign Selected (0)
+                            </button>
+                        </div>
+
+                        <div id="available-students-list" class="space-y-2 max-h-[250px] overflow-y-auto pr-1">
+                            <label class="available-student-item flex items-center cursor-pointer" data-dept="BSIT" data-year="4th" data-category="Major">
+                                <input type="checkbox" name="available_student" class="form-checkbox roster-student-checkbox mr-4">
+                                <div>
+                                    <p class="font-medium text-gray-900">Mark Zeller</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">ID: 15101 | BSIT, 4th Year</p>
+                                </div>
+                            </label>
+                            <label class="available-student-item flex items-center cursor-pointer" data-dept="BSIT" data-year="3rd" data-category="Major">
+                                <input type="checkbox" name="available_student" class="form-checkbox roster-student-checkbox mr-4">
+                                <div>
+                                    <p class="font-medium text-gray-900">Jenna Torres</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">ID: 16223 | BSIT, 3rd Year</p>
+                                </div>
+                            </label>
+                            <label class="available-student-item flex items-center cursor-pointer" data-dept="BSHM" data-year="3rd" data-category="Major">
+                                <input type="checkbox" name="available_student" class="form-checkbox roster-student-checkbox mr-4">
+                                <div>
+                                    <p class="font-medium text-gray-900">Victor Cruz</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">ID: 17800 | BSHM, 3rd Year</p>
+                                </div>
+                            </label>
+                            <label class="available-student-item flex items-center cursor-pointer" data-dept="BSBA" data-year="1st" data-category="GE">
+                                <input type="checkbox" name="available_student" class="form-checkbox roster-student-checkbox mr-4">
+                                <div>
+                                    <p class="font-medium text-gray-900">Sarah Chen</p>
+                                    <p class="text-xs text-gray-500 mt-0.5">ID: 18105 | BSBA, 1st Year</p>
+                                </div>
+                            </label>
+                             <div class="text-center text-sm text-gray-500 py-2">... 116 more available students ...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-gray-100 mt-10">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
+            &copy; 2025 AttendEase.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const assignmentItems = document.querySelectorAll('.assignment-item');
+            const subjectRosterTitle = document.getElementById('subject-roster-title');
+            const rosterCount = document.getElementById('roster-count');
+            
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+
+            const availableStudentListContainer = document.getElementById('available-students-list');
+            const selectAllCheckbox = document.getElementById('student-select-all');
+            const addSelectedButton = document.getElementById('add-selected-button');
+            
+            // Subject/Room Filters (Left Panel)
+            const subjectDeptFilter = document.getElementById('subject-dept-filter');
+            const subjectCategoryFilter = document.getElementById('subject-category-filter');
+            
+            // Student Filters (Right Panel)
+            const studentDeptFilter = document.getElementById('student-dept-filter');
+            const studentYearFilter = document.getElementById('student-year-filter');
+
+            let visibleAvailableStudents = [];
+            let currentRoomDept = '';
+            let currentRoomLevel = '';
+            let currentRoomCategory = '';
+
+            // --- Subject/Room List Filtering Logic (Left Panel) ---
+            function filterSubjectList() {
+                const selectedDept = subjectDeptFilter.value;
+                const selectedCategory = subjectCategoryFilter.value;
+
+                assignmentItems.forEach(item => {
+                    const roomDept = item.getAttribute('data-dept');
+                    const roomCategory = item.getAttribute('data-category');
+
+                    const matchesDept = selectedDept === '' || roomDept === selectedDept;
+                    const matchesCategory = selectedCategory === '' || roomCategory === selectedCategory;
+
+                    item.style.display = (matchesDept && matchesCategory) ? 'block' : 'none';
+                });
+
+                // Re-select the first visible room if the currently active one is hidden
+                const activeItem = document.querySelector('.assignment-item.active');
+                if (activeItem && activeItem.style.display === 'none') {
+                    const firstVisible = document.querySelector('.assignment-item[style*="block"]');
+                    if (firstVisible) {
+                         firstVisible.click();
+                    } else {
+                        // Handle case where all rooms are filtered out (optional: clear right panel)
+                        subjectRosterTitle.textContent = 'None Selected';
+                        rosterCount.textContent = '0';
+                    }
+                }
+            }
+            
+            subjectDeptFilter.addEventListener('change', filterSubjectList);
+            subjectCategoryFilter.addEventListener('change', filterSubjectList);
+
+
+            // --- Tab Switching Logic (Unchanged) ---
+            function switchTab(targetTab) {
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('tab-active', 'primary-color-text', 'border-primary', 'font-bold');
+                    btn.classList.add('text-gray-500', 'hover:text-gray-700', 'border-transparent', 'font-medium');
+                });
+                tabPanes.forEach(pane => {
+                    pane.classList.add('hidden');
+                });
+
+                const activeBtn = document.querySelector(`.tab-button[data-tab="${targetTab}"]`);
+                const activePane = document.getElementById(`tab-${targetTab}`);
+
+                activeBtn.classList.add('tab-active', 'primary-color-text', 'border-primary', 'font-bold');
+                activeBtn.classList.remove('text-gray-500', 'hover:text-gray-700', 'border-transparent', 'font-medium');
+                activePane.classList.remove('hidden');
+
+                if (targetTab === 'available') {
+                    filterAvailableStudents();
+                }
+            }
+
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    switchTab(this.getAttribute('data-tab'));
+                });
+            });
+
+            // --- Subject/Room Selection Logic (Left Panel Click) ---
+            assignmentItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    assignmentItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const roomName = this.getAttribute('data-room-name');
+                    const assignedCount = this.getAttribute('data-assigned');
+                    
+                    // Capture the selected room's required attributes
+                    currentRoomDept = this.getAttribute('data-dept');
+                    currentRoomLevel = this.getAttribute('data-level');
+                    currentRoomCategory = this.getAttribute('data-category'); 
+
+                    // Update UI elements
+                    subjectRosterTitle.textContent = roomName;
+                    rosterCount.textContent = assignedCount;
+
+                    // Automatically apply filters to match the selected room (Dept and Year)
+                    studentDeptFilter.value = currentRoomDept;
+                    studentYearFilter.value = currentRoomLevel;
+                    
+                    // Re-run student filter if we are on the available tab
+                    const availableTab = document.getElementById('tab-available');
+                    if (!availableTab.classList.contains('hidden')) {
+                         filterAvailableStudents();
+                    }
+                    
+                    switchTab('roster'); // Reset to Roster tab on new selection
+                });
+            });
+
+            // --- Filter Available Students (Right Panel, 'available' tab) ---
+            function filterAvailableStudents() {
+                // Get the current filter selections from the dropdowns
+                const selectedDept = studentDeptFilter.value;
+                const selectedYear = studentYearFilter.value;
+
+                visibleAvailableStudents = [];
+
+                const allAvailableStudents = document.querySelectorAll('.available-student-item');
+
+                allAvailableStudents.forEach(item => {
+                    const studentDept = item.getAttribute('data-dept');
+                    const studentYear = item.getAttribute('data-year');
+                    
+                    // Filter Logic: Must match ALL selected filters (or filter is 'All')
+                    const matchesDept = selectedDept === '' || studentDept === selectedDept;
+                    const matchesYear = selectedYear === '' || studentYear === selectedYear;
+
+                    item.style.display = (matchesDept && matchesYear) ? 'flex' : 'none';
+                    
+                    if (item.style.display === 'flex') {
+                        visibleAvailableStudents.push(item.querySelector('.roster-student-checkbox'));
+                    }
+                });
+                
+                // Reset 'Select All' and button state after filtering
+                selectAllCheckbox.checked = false;
+                checkSelectedState();
+            }
+
+            // Add event listeners for student filters
+            studentDeptFilter.addEventListener('change', filterAvailableStudents);
+            studentYearFilter.addEventListener('change', filterAvailableStudents);
+
+            // --- Checkbox and Button State Logic (Right Panel) (Unchanged) ---
+            function checkSelectedState() {
+                const checkedCount = document.querySelectorAll('#available-students-list .roster-student-checkbox:checked').length;
+                addSelectedButton.disabled = checkedCount === 0;
+                addSelectedButton.textContent = checkedCount > 0 ? `Assign Selected (${checkedCount})` : 'Assign Selected (0)';
+            }
+
+            // Listener for 'Select All'
+            selectAllCheckbox.addEventListener('change', function() {
+                const isChecked = this.checked;
+                visibleAvailableStudents.forEach(checkbox => {
+                    checkbox.checked = isChecked;
+                });
+                checkSelectedState();
+            });
+
+            // Listener for individual checkboxes
+            if(availableStudentListContainer) {
+                availableStudentListContainer.addEventListener('change', function(e) {
+                    if (e.target.classList.contains('roster-student-checkbox')) {
+                        checkSelectedState();
+                        if (!e.target.checked) {
+                            selectAllCheckbox.checked = false;
+                        } else if (visibleAvailableStudents.length > 0 && visibleAvailableStudents.every(cb => cb.checked)) {
+                            selectAllCheckbox.checked = true;
+                        }
+                    }
+                });
+            }
+
+            // --- Initial Load ---
+            if (assignmentItems.length > 0) {
+                // Manually trigger click on the first item to initialize data and filters
+                assignmentItems[0].click(); 
+            }
+        });
+    </script>
+</body>
+</html>
