@@ -7,7 +7,123 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        html{scroll-behavior:smooth}body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#f7f9fb 0%,#e9ecef 100%)}.primary-color{background:linear-gradient(135deg,rgb(79 70 229) 0%,rgb(99 102 241) 100%)}.primary-text{background:linear-gradient(135deg,rgb(79 70 229) 0%,rgb(99 102 241) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}header{background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);box-shadow:0 4px 30px rgba(0,0,0,0.08)}.nav-item{position:relative;padding:8px 16px;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);height:100%;display:flex;align-items:center;border-radius:12px}.nav-item:active{transform:scale(0.95)}.nav-item:hover{color:rgb(79 70 229);transform:translateY(-2px);background:rgba(79,70,229,0.05)}.nav-item::after{content:'';position:absolute;left:50%;bottom:-2px;width:0;height:3px;background:linear-gradient(90deg,rgb(79 70 229),rgb(99 102 241));transition:all 0.3s ease;border-radius:2px}.nav-item:hover::after{width:100%;left:0}.nav-item.active{font-weight:600;color:rgb(79 70 229)}.nav-item.active::after{content:'';position:absolute;left:0;bottom:-2px;width:100%;height:3px;background:linear-gradient(90deg,rgb(79 70 229),rgb(99 102 241));border-radius:2px}.primary-button{position:relative;overflow:hidden;transition:all 0.3s ease}.primary-button::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transition:left 0.5s ease}.primary-button:hover::before{left:100%}.primary-button:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 10px 25px rgba(79,70,229,0.3)}.inline-form-field{width:150px;transition:all 0.3s ease}.inline-form-field:focus{transform:scale(1.02);box-shadow:0 0 0 3px rgba(79,70,229,0.1)}.inline-signin-button{height:40px}.desktop-flex-grow{flex-grow:1}.preview-header{margin-bottom:2rem;text-align:center}.faq-card{transition:all 0.4s cubic-bezier(0.4,0,0.2,1);background:linear-gradient(135deg,#ffffff 0%,#f8f9fa 100%);position:relative}.faq-card::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(79,70,229,0.1),rgba(99,102,241,0.1));opacity:0;transition:opacity 0.4s ease;border-radius:0.75rem}.faq-card:hover{transform:translateY(-10px) scale(1.03);box-shadow:0 20px 40px rgba(79,70,229,0.15)}.faq-card:hover::before{opacity:1}.faq-card:active{transform:translateY(-5px) scale(1.01)}#faq-carousel{overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%)}.faq-carousel-wrapper{animation:scroll-faq 40s linear infinite}.faq-carousel-wrapper:hover{animation-play-state:paused}@keyframes scroll-faq{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}#app-carousel img{padding:0.5rem;transition:transform 0.3s ease}#app-carousel img:hover{transform:scale(1.05)}.scrollbar-hide::-webkit-scrollbar{display:none}.scrollbar-hide{-ms-overflow-style:none;scrollbar-width:none}#card-carousel{overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%)}.carousel-wrapper{animation:scroll-cards 30s linear infinite}.carousel-wrapper:hover{animation-play-state:paused}.contact-card{transition:all 0.5s cubic-bezier(0.4,0,0.2,1);position:relative;overflow:hidden}.contact-card::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(79,70,229,0.3),rgba(99,102,241,0.3));opacity:0;transition:opacity 0.5s ease}.contact-card:hover{transform:translateY(-15px) scale(1.08);z-index:10;box-shadow:0 25px 50px rgba(79,70,229,0.4)}.contact-card:hover::after{opacity:1}@keyframes scroll-cards{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}main{animation:fadeInUp 1s ease-out}@keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-10px)}}.float-animation{animation:float 3s ease-in-out infinite}.dot{transition:all 0.3s ease}.dot:hover{transform:scale(1.3)}.dot.bg-gray-700{animation:pulse 2s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}#app-carousel button{transition:all 0.3s ease}#app-carousel button:hover{transform:scale(1.2);background-color:rgba(79,70,229,0.9)}section{animation:fadeInUp 0.8s ease-out}@keyframes gradient-shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}h1 .primary-text{background-size:200% 200%;animation:gradient-shift 3s ease infinite}
+        html{scroll-behavior:smooth}body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#f7f9fb 0%,#e9ecef 100%)}.primary-color{background:linear-gradient(135deg,rgb(79 70 229) 0%,rgb(99 102 241) 100%)}.primary-text{background:linear-gradient(135deg,rgb(79 70 229) 0%,rgb(99 102 241) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}header{background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);box-shadow:0 4px 30px rgba(0,0,0,0.08)}.nav-item{position:relative;padding:8px 16px;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);height:100%;display:flex;align-items:center;border-radius:12px}.nav-item:active{transform:scale(0.95)}.nav-item:hover{color:rgb(79 70 229);transform:translateY(-2px);background:rgba(79,70,229,0.05)}.nav-item::after{content:'';position:absolute;left:50%;bottom:-2px;width:0;height:3px;background:linear-gradient(90deg,rgb(79 70 229),rgb(99 102 241));transition:all 0.3s ease;border-radius:2px}.nav-item:hover::after{width:100%;left:0}.nav-item.active{font-weight:600;color:rgb(79 70 229)}.nav-item.active::after{content:'';position:absolute;left:0;bottom:-2px;width:100%;height:3px;background:linear-gradient(90deg,rgb(79 70 229),rgb(99 102 241));border-radius:2px}.primary-button{position:relative;overflow:hidden;transition:all 0.3s ease}.primary-button::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transition:left 0.5s ease}.primary-button:hover::before{left:100%}.primary-button:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 10px 25px rgba(79,70,229,0.3)}.inline-form-field{width:150px;transition:all 0.3s ease}.inline-form-field:focus{transform:scale(1.02);box-shadow:0 0 0 3px rgba(79,70,229,0.1)}.inline-signin-button{height:40px}.desktop-flex-grow{flex-grow:1}.preview-header{margin-bottom:2rem;text-align:center}.faq-card{transition:all 0.4s cubic-bezier(0.4,0,0.2,1);background:linear-gradient(135deg,#ffffff 0%,#f8f9fa 100%);position:relative}.faq-card::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(79,70,229,0.1),rgba(99,102,241,0.1));opacity:0;transition:opacity 0.4s ease;border-radius:0.75rem}.faq-card:hover{transform:translateY(-10px) scale(1.03);box-shadow:0 20px 40px rgba(79,70,229,0.15)}.faq-card:hover::before{opacity:1}.faq-card:active{transform:translateY(-5px) scale(1.01)}#faq-carousel{overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%)}.faq-carousel-wrapper{animation:scroll-faq 40s linear infinite}.faq-carousel-wrapper:hover{animation-play-state:paused}@keyframes scroll-faq{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}#app-carousel img{padding:0.5rem;transition:transform 0.3s ease}#app-carousel img:hover{transform:scale(1.05)}.scrollbar-hide::-webkit-scrollbar{display:none}.scrollbar-hide{-ms-overflow-style:none;scrollbar-width:none}#card-carousel{overflow:hidden;position:relative;mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%)}.contact-card{transition:all 0.5s cubic-bezier(0.4,0,0.2,1);position:relative;overflow:hidden}.contact-card::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(79,70,229,0.3),rgba(99,102,241,0.3));opacity:0;transition:opacity 0.5s ease}.contact-card:hover{transform:translateY(-15px) scale(1.08);z-index:10;box-shadow:0 25px 50px rgba(79,70,229,0.4)}.contact-card:hover::after{opacity:1}@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}main{animation:fadeInUp 1s ease-out}@keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-10px)}}.float-animation{animation:float 3s ease-in-out infinite}.dot{transition:all 0.3s ease}.dot:hover{transform:scale(1.3)}.dot.bg-gray-700{animation:pulse 2s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}#app-carousel button{transition:all 0.3s ease}#app-carousel button:hover{transform:scale(1.2);background-color:rgba(79,70,229,0.9)}@keyframes gradient-shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}h1 .primary-text{background-size:200% 200%;animation:gradient-shift 3s ease infinite}
+
+        /* SKELETON LOADING */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* SCROLL ANIMATIONS */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-animate.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-float {
+            opacity: 0;
+            transform: translateY(80px) scale(0.9);
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .scroll-float.animate-in {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Remove animation when scrolling back up */
+        .scroll-animate.animate-out {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .scroll-float.animate-out {
+            opacity: 0;
+            transform: translateY(80px) scale(0.9);
+        }
+
+        .scroll-slide-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-slide-left.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-slide-left.animate-out {
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+
+        .scroll-slide-right {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-slide-right.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-slide-right.animate-out {
+            opacity: 0;
+            transform: translateX(100px);
+        }
+
+        .scroll-zoom {
+            opacity: 0;
+            transform: scale(0.7);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .scroll-zoom.animate-in {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .scroll-zoom.animate-out {
+            opacity: 0;
+            transform: scale(0.7);
+        }
+
+        .scroll-rotate {
+            opacity: 0;
+            transform: rotate(-5deg) scale(0.9);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-rotate.animate-in {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
+        .scroll-rotate.animate-out {
+            opacity: 0;
+            transform: rotate(-5deg) scale(0.9);
+        }
+
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
+        .delay-500 { transition-delay: 0.5s; }
     </style>
 </head>
 <body class="antialiased">
@@ -25,7 +141,8 @@
                         <a href="#help-section" class="nav-item text-gray-500 hover:text-gray-900">Help & Downloads</a>
                         <a href="#about-section" class="nav-item text-gray-500 hover:text-gray-900">About Us</a>
                     </nav>
-<form id="inline-login-form" class="hidden h-full items-center space-x-2 mr-4" onsubmit="handleLogin(event)">                        <input type="email" id="email" name="email" required placeholder="Email" class="inline-form-field px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+                    <form id="inline-login-form" class="hidden h-full items-center space-x-2 mr-4" onsubmit="handleLogin(event)">
+                        <input type="email" id="email" name="email" required placeholder="Email" class="inline-form-field px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm">
                         <input type="password" id="password" name="password" required placeholder="Password" class="inline-form-field px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm">
                         <button type="submit" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-white primary-color primary-button inline-signin-button">Login</button>
                     </form>
@@ -49,6 +166,7 @@
             </div>
         </div>
     </header>
+
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div class="text-center">
             <h1 class="text-6xl font-extrabold text-gray-900 tracking-tight sm:text-7xl lg:text-8xl mb-6">Attendance <span class="primary-text">Simplified</span>.</h1>
@@ -59,12 +177,13 @@
             </div>
         </div>
     </main>
-    <section id="faq-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-white rounded-xl shadow-2xl">
-        <div class="preview-header">
+
+    <section id="faq-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-white rounded-xl shadow-2xl scroll-float">
+        <div class="preview-header scroll-animate">
             <h2 class="text-3xl font-bold text-gray-900 mb-2">Frequently Asked Questions</h2>
             <p class="text-gray-500">Your quick guide to common questions about accounts, setup, and features.</p>
         </div>
-        <div id="faq-carousel" class="mt-10 overflow-hidden">
+        <div id="faq-carousel" class="mt-10 overflow-hidden scroll-animate delay-200">
             <div class="faq-carousel-wrapper flex gap-8">
                 <div class="faq-card p-6 border border-gray-200 rounded-xl shadow-md flex-shrink-0 w-80">
                     <h3 class="text-xl font-bold primary-text mb-3">How do I reset my password?</h3>
@@ -104,12 +223,13 @@
             </div>
         </div>
     </section>
-    <section id="contacts-section" class="bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 rounded-xl shadow-2xl mt-8">
-        <div class="preview-header text-center">
+
+    <section id="contacts-section" class="bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 rounded-xl shadow-2xl mt-8 scroll-zoom">
+        <div class="preview-header scroll-animate">
             <h2 class="text-3xl font-bold text-gray-900 mb-2">Get In Touch</h2>
             <p class="text-gray-500">Reach out directly to our contact personnel.</p>
         </div>
-        <div class="relative w-full py-10 overflow-hidden">
+        <div class="relative w-full py-10 overflow-hidden scroll-animate delay-200">
             <div id="card-carousel" class="w-full">
                 <div class="carousel-wrapper flex">
                     <div class="contact-card relative flex-shrink-0 flex flex-col justify-end overflow-hidden rounded-xl shadow-2xl w-80 h-96 mx-6">
@@ -166,13 +286,14 @@
             </div>
         </div>
     </section>
+
     <section id="help-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mt-8">
-        <div class="preview-header">
+        <div class="preview-header scroll-animate">
             <h2 class="text-3xl font-bold text-gray-900 mb-2">Help & Application Downloads</h2>
             <p class="text-gray-500">Download our mobile apps for easy on-the-go attendance management.</p>
         </div>
-        <div class="flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-12 bg-white p-8 rounded-xl shadow-2xl">
-            <div class="lg:w-1/2 p-4 flex justify-center">
+        <div class="flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-12 bg-white p-8 rounded-xl shadow-2xl scroll-float">
+            <div class="lg:w-1/2 p-4 flex justify-center scroll-slide-left">
                 <div id="app-carousel" class="relative w-full max-w-sm overflow-hidden rounded-xl shadow-2xl border border-gray-200">
                     <div class="carousel-inner flex transition-transform duration-500 ease-in-out">
                         <img src="sc1.png" alt="Screenshot 1" class="w-full max-h-64 object-contain flex-shrink-0">
@@ -188,7 +309,7 @@
                     </div>
                 </div>
             </div>
-            <div class="lg:w-1/2 p-4">
+            <div class="lg:w-1/2 p-4 scroll-slide-right">
                 <h3 class="text-2xl font-semibold primary-text mb-4">Quick Links & Support</h3>
                 <p class="text-gray-600 mb-6">Access our detailed knowledge base or download the dedicated mobile apps for fast, reliable attendance logging in the classroom.</p>
                 <div class="flex flex-wrap gap-4 mb-8">
@@ -201,16 +322,17 @@
             </div>
         </div>
     </section>
+
     <section id="about-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 mt-8">
-        <div class="preview-header">
+        <div class="preview-header scroll-animate">
             <h2 class="text-3xl font-bold text-gray-900 mb-2">About AttendEase</h2>
             <p class="text-gray-500">Learn about our mission to revolutionize school administration and attendance tracking.</p>
         </div>
-        <div class="flex flex-col lg:flex-row-reverse gap-12 max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-2xl">
-            <div class="lg:w-1/2 p-4 flex justify-center">
+        <div class="flex flex-col lg:flex-row-reverse gap-12 max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-2xl scroll-rotate">
+            <div class="lg:w-1/2 p-4 flex justify-center scroll-slide-right">
                 <img src="team1.jpg" alt="Photo of the AttendEase core development team" class="w-full h-auto rounded-xl shadow-2xl border border-gray-200 hover:scale-105 transition-transform duration-500">
             </div>
-            <div class="lg:w-1/2 p-4 space-y-6">
+            <div class="lg:w-1/2 p-4 space-y-6 scroll-slide-left">
                 <h3 class="text-2xl font-semibold primary-text mb-4">System Overview</h3>
                 <p id="typewriter1" class="text-gray-600 min-h-[160px]"></p>
                 <h3 class="text-2xl font-semibold primary-text mb-4 pt-4 border-t border-gray-100">Acknowledgements</h3>
@@ -218,195 +340,186 @@
             </div>
         </div>
     </section>
+
     <footer class="bg-white border-t border-gray-100 mt-20">
         <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">&copy; 2025 AttendEase. All rights reserved.</div>
     </footer>
+
     <script>
-    // --- 1. Header and Mobile Menu Logic ---
+        // SCROLL ANIMATION OBSERVER - Reanimates on scroll back up
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        };
 
-    // --- NEW: LOGIN REDIRECT HANDLER ---
-    function handleLogin(event) {
-        event.preventDefault(); // Prevents the page from refreshing
-        
-        // --- Simulation of Successful Login ---
-        // In a real application, you would send the email/password to a server here.
-        
-        // Redirect to the dashboard page upon successful login simulation
-        window.location.href = 'dashBoardUI.html'; 
-        
-        // Return false to ensure no default action takes place (though preventDefault handles this)
-        return false;
-    }
-
-    const toggleAuthButton = document.getElementById("toggle-auth-button");
-    const authIcon = document.getElementById("auth-icon");
-    const navLinks = document.getElementById("nav-links");
-    const inlineLoginForm = document.getElementById("inline-login-form");
-    const mobileMenuButton = document.getElementById("mobile-menu-button");
-    const mobileMenu = document.getElementById("mobile-menu");
-    const loginIconPath = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-18 4h3m4-3a7 7 0 1110 0v1h-17v-1a7 7 0 017 7z"/>';
-    const closeIconPath = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
-
-    let isLoginVisible = false;
-
-    // Function to handle the navigation/login form swap
-    const toggleAuthContent = () => {
-        isLoginVisible = !isLoginVisible;
-        
-        if (isLoginVisible) {
-            // Show Login Form, Hide Nav Links
-            navLinks.classList.add('hidden');
-            inlineLoginForm.classList.remove('hidden');
-            inlineLoginForm.classList.add('flex');
-            authIcon.innerHTML = closeIconPath;
-        } else {
-            // Show Nav Links, Hide Login Form
-            navLinks.classList.remove('hidden');
-            inlineLoginForm.classList.add('hidden');
-            inlineLoginForm.classList.remove('flex');
-            authIcon.innerHTML = loginIconPath;
-        }
-    };
-
-    // Mobile menu toggle
-    mobileMenuButton.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-    });
-
-    // Toggle button event listener
-    toggleAuthButton.addEventListener('click', toggleAuthContent);
-
-    // --- 2. App Screenshot Carousel Logic (Manual/Auto-Play) ---
-    const carousel = document.querySelector('#app-carousel .carousel-inner');
-    const slides = carousel ? carousel.children : [];
-    const dots = document.querySelectorAll('#app-carousel .dot');
-    let index = 0;
-    const totalSlides = slides.length;
-    let autoSlideInterval;
-
-    if (carousel && totalSlides > 0) {
-        function showSlide(i) {
-            carousel.style.transform = `translateX(-${i * 100}%)`;
-            dots.forEach((dot, idx) => {
-                dot.classList.toggle('bg-gray-700', idx === i);
-                dot.classList.toggle('bg-gray-400', idx !== i);
-            });
-        }
-
-        function nextSlide() { index = (index + 1) % totalSlides; showSlide(index); }
-        function prevSlide() { index = (index - 1 + totalSlides) % totalSlides; showSlide(index); }
-
-        const startAutoPlay = () => autoSlideInterval = setInterval(nextSlide, 3000);
-        const stopAutoPlay = () => clearInterval(autoSlideInterval);
-
-        const carouselBox = document.getElementById('app-carousel');
-        carouselBox.addEventListener('mouseenter', stopAutoPlay);
-        carouselBox.addEventListener('mouseleave', startAutoPlay);
-
-        document.getElementById('next-slide').addEventListener('click', () => { stopAutoPlay(); nextSlide(); startAutoPlay(); });
-        document.getElementById('prev-slide').addEventListener('click', () => { stopAutoPlay(); prevSlide(); startAutoPlay(); });
-        dots.forEach((dot, idx) => {
-            dot.addEventListener('click', () => { stopAutoPlay(); index = idx; showSlide(index); startAutoPlay(); });
-        });
-
-        showSlide(index);
-        startAutoPlay();
-    }
-
-
-    // --- 3. Typewriter Effect Logic ---
-    function setupTypewriter(elementId, text) {
-        const element = document.getElementById(elementId);
-        if (!element) return;
-
-        let i = 0;
-        element.innerHTML = ''; // Clear existing content
-
-        function type() {
-            if (i < text.length) {
-                // Check for HTML tags to skip
-                if (text.substring(i, i + 4) === '<br>') {
-                    element.innerHTML += '<br>';
-                    i += 4;
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.remove('animate-out');
+                    entry.target.classList.add('animate-in');
                 } else {
-                    element.innerHTML += text.charAt(i);
-                    i++;
+                    entry.target.classList.remove('animate-in');
+                    entry.target.classList.add('animate-out');
                 }
-                setTimeout(type, 30); // Typing speed
-            }
-        }
-        type();
-    }
+            });
+        }, observerOptions);
 
-    // Set the text content for the typewriter sections
-    const systemOverviewText = "AttendEase is a SIA project aimed at providing a modern, efficient, and secure solution for school attendance tracking. It supports real-time logging, automated reporting, and comprehensive student/teacher management. <br><br>Developed using a modern web stack, it is designed to be reliable and easy-to-use for both administrators and educators.";
-    const acknowledgementsText = "This system was developed by the BSIT 3 -Team of Aces Tagum College Inc. <br><br>We extend our heartfelt gratitude to our SIA adviser, the faculty of the Institute of Information Communication Technology, and our families for their continuous support and guidance.";
-
-    // --- 4. Continuous Contact Card Loop (Custom JS - Upskwela Style) ---
-    // NOTE: This overrides the CSS animation for contact cards, which is better for smooth, continuous looping.
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- Setup Typewriters ---
-        setupTypewriter('typewriter1', systemOverviewText);
-        setupTypewriter('typewriter2', acknowledgementsText);
-
-        const contactContainerWrapper = document.querySelector('#card-carousel .carousel-wrapper'); 
-        if (!contactContainerWrapper) return; 
-
-        // --- CLONE CARDS FOR SEAMLESS LOOP ---
-        const originalCards = Array.from(contactContainerWrapper.children);
-        
-        // Clone and append the original cards (cloning 5 cards)
-        originalCards.forEach(card => {
-            const clone = card.cloneNode(true);
-            contactContainerWrapper.appendChild(clone);
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.scroll-animate, .scroll-float, .scroll-slide-left, .scroll-slide-right, .scroll-zoom, .scroll-rotate');
+            animatedElements.forEach(el => observer.observe(el));
         });
 
-        // --- CALCULATE SCROLL DISTANCE ---
-        // The container is the contact-card (w-80) with horizontal margin (mx-6, total 12 * 2 = 24px per card)
-        // Card Width: 320px (w-80)
-        // Card Margin: 48px (mx-6 on each side means 12px margin on left/right of each card. The space between is 12px (right of card 1) + 12px (left of card 2) = 24px)
-        const CARD_WIDTH = 320; 
-        const CARD_MARGIN = 12 * 2; // mx-6 gives 0.75rem (12px) margin on each side
-        const CARD_TOTAL_W = CARD_WIDTH + CARD_MARGIN; // 320 + 24 = 344px
-        const NUM_ORIGINAL_CARDS = originalCards.length; // 5
+        // LOGIN REDIRECT HANDLER
+        function handleLogin(event) {
+            event.preventDefault();
+            window.location.href = 'dashBoardUI.html';
+            return false;
+        }
 
-        // Total distance of one original set.
-        const totalScrollWidth = CARD_TOTAL_W * NUM_ORIGINAL_CARDS; // 344px * 5 = 1720px
+        // HEADER AND MOBILE MENU
+        const toggleAuthButton = document.getElementById("toggle-auth-button");
+        const authIcon = document.getElementById("auth-icon");
+        const navLinks = document.getElementById("nav-links");
+        const inlineLoginForm = document.getElementById("inline-login-form");
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const loginIconPath = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-18 4h3m4-3a7 7 0 1110 0v1h-17v-1a7 7 0 017 7z"/>';
+        const closeIconPath = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
 
-        // --- ANIMATION LOOP using CSS Translate ---
-        const scrollSpeed = 20; // Speed in pixels per frame
-        let currentPosition = 0;
-        
-        function animateContactLoop() {
-            currentPosition -= scrollSpeed; // Move left
+        let isLoginVisible = false;
+
+        const toggleAuthContent = () => {
+            isLoginVisible = !isLoginVisible;
             
-            // If we've scrolled past the original set, reset instantly
-            if (currentPosition < -totalScrollWidth) {
-                currentPosition = 0; 
+            if (isLoginVisible) {
+                navLinks.classList.add('hidden');
+                inlineLoginForm.classList.remove('hidden');
+                inlineLoginForm.classList.add('flex');
+                authIcon.innerHTML = closeIconPath;
+            } else {
+                navLinks.classList.remove('hidden');
+                inlineLoginForm.classList.add('hidden');
+                inlineLoginForm.classList.remove('flex');
+                authIcon.innerHTML = loginIconPath;
+            }
+        };
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        toggleAuthButton.addEventListener('click', toggleAuthContent);
+
+        // APP SCREENSHOT CAROUSEL
+        const carousel = document.querySelector('#app-carousel .carousel-inner');
+        const slides = carousel ? carousel.children : [];
+        const dots = document.querySelectorAll('#app-carousel .dot');
+        let index = 0;
+        const totalSlides = slides.length;
+        let autoSlideInterval;
+
+        if (carousel && totalSlides > 0) {
+            function showSlide(i) {
+                carousel.style.transform = `translateX(-${i * 100}%)`;
+                dots.forEach((dot, idx) => {
+                    dot.classList.toggle('bg-gray-700', idx === i);
+                    dot.classList.toggle('bg-gray-400', idx !== i);
+                });
             }
 
-            // Apply movement
-            contactContainerWrapper.style.transform = `translateX(${currentPosition}px)`;
-            
-            requestAnimationFrame(animateContactLoop);
+            function nextSlide() { index = (index + 1) % totalSlides; showSlide(index); }
+            function prevSlide() { index = (index - 1 + totalSlides) % totalSlides; showSlide(index); }
+
+            const startAutoPlay = () => autoSlideInterval = setInterval(nextSlide, 3000);
+            const stopAutoPlay = () => clearInterval(autoSlideInterval);
+
+            const carouselBox = document.getElementById('app-carousel');
+            carouselBox.addEventListener('mouseenter', stopAutoPlay);
+            carouselBox.addEventListener('mouseleave', startAutoPlay);
+
+            document.getElementById('next-slide').addEventListener('click', () => { stopAutoPlay(); nextSlide(); startAutoPlay(); });
+            document.getElementById('prev-slide').addEventListener('click', () => { stopAutoPlay(); prevSlide(); startAutoPlay(); });
+            dots.forEach((dot, idx) => {
+                dot.addEventListener('click', () => { stopAutoPlay(); index = idx; showSlide(index); startAutoPlay(); });
+            });
+
+            showSlide(index);
+            startAutoPlay();
         }
-        
-        animateContactLoop();
-    });
 
-    // --- 5. FAQ Carousel Clone Logic (To support CSS Keyframes loop) ---
-    // This is necessary because the CSS loop (scroll-faq) needs enough content to move
-    document.addEventListener('DOMContentLoaded', () => {
-        const faqWrapper = document.querySelector('.faq-carousel-wrapper');
-        if (!faqWrapper) return;
+        // TYPEWRITER EFFECT
+        function setupTypewriter(elementId, text) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
 
-        const originalFaqCards = Array.from(faqWrapper.children);
-        
-        // Clone the entire original set to create the seamless loop
-        originalFaqCards.forEach(card => {
-            const clone = card.cloneNode(true);
-            faqWrapper.appendChild(clone);
+            let i = 0;
+            element.innerHTML = '';
+
+            function type() {
+                if (i < text.length) {
+                    if (text.substring(i, i + 4) === '<br>') {
+                        element.innerHTML += '<br>';
+                        i += 4;
+                    } else {
+                        element.innerHTML += text.charAt(i);
+                        i++;
+                    }
+                    setTimeout(type, 30);
+                }
+            }
+            type();
+        }
+
+        const systemOverviewText = "AttendEase is a SIA project aimed at providing a modern, efficient, and secure solution for school attendance tracking. It supports real-time logging, automated reporting, and comprehensive student/teacher management. <br><br>Developed using a modern web stack, it is designed to be reliable and easy-to-use for both administrators and educators.";
+        const acknowledgementsText = "This system was developed by the BSIT 3 -Team of Aces Tagum College Inc. <br><br>We extend our heartfelt gratitude to our SIA adviser, the faculty of the Institute of Information Communication Technology, and our families for their continuous support and guidance.";
+
+        // CAROUSEL CLONING AND ANIMATION
+        document.addEventListener('DOMContentLoaded', () => {
+            setupTypewriter('typewriter1', systemOverviewText);
+            setupTypewriter('typewriter2', acknowledgementsText);
+
+            // FAQ Carousel Clone
+            const faqWrapper = document.querySelector('.faq-carousel-wrapper');
+            if (faqWrapper) {
+                const originalFaqCards = Array.from(faqWrapper.children);
+                originalFaqCards.forEach(card => {
+                    const clone = card.cloneNode(true);
+                    faqWrapper.appendChild(clone);
+                });
+            }
+
+            // Contact Cards Carousel
+            const contactWrapper = document.querySelector('#card-carousel .carousel-wrapper');
+            if (contactWrapper) {
+                const originalCards = Array.from(contactWrapper.children);
+                
+                originalCards.forEach(card => {
+                    const clone = card.cloneNode(true);
+                    contactWrapper.appendChild(clone);
+                });
+
+                const CARD_WIDTH = 320;
+                const CARD_MARGIN = 24;
+                const CARD_TOTAL_W = CARD_WIDTH + CARD_MARGIN;
+                const NUM_ORIGINAL_CARDS = originalCards.length;
+                const totalScrollWidth = CARD_TOTAL_W * NUM_ORIGINAL_CARDS;
+                const scrollSpeed = 1;
+                let currentPosition = 0;
+                
+                function animateContactLoop() {
+                    currentPosition -= scrollSpeed;
+                    
+                    if (currentPosition < -totalScrollWidth) {
+                        currentPosition = 0; 
+                    }
+
+                    contactWrapper.style.transform = `translateX(${currentPosition}px)`;
+                    requestAnimationFrame(animateContactLoop);
+                }
+                
+                animateContactLoop();
+            }
         });
-    });
-
-</script>
+    </script>
+</body>
+</html>
