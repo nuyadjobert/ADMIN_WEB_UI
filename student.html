@@ -7,46 +7,255 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Base Styles & Utility Classes (Copied from your provided code) */
-        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; }
+        html {
+            scroll-behavior: smooth;
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f7f9fc;
+        }
         .primary-color-bg { background-color: #4f46e5; }
         .primary-color-text { color: #4f46e5; }
         .hover-primary-bg:hover { background-color: #4338ca; }
         .border-primary { border-color: #4f46e5; }
         .ring-primary { ring-color: #4f46e5; }
+        
         .panel { 
             background-color: #ffffff; 
             border-radius: 1rem; 
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
-            padding: 1.5rem; 
+            padding: 1.5rem;
+            transition: all 0.3s ease;
         }
-        .assignment-item { border-left: 5px solid transparent; transition: all 0.2s ease; padding: 1rem; border-radius: 0.75rem;}
-        .assignment-item.active { background-color: #eef2ff; border-left-color: #4f46e5; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
-        .roster-student-item, .available-student-item { border: 1px solid #e5e7eb; padding: 1rem; border-radius: 0.75rem; }
-        .form-checkbox { /* Simplified Checkbox style */ appearance: none; cursor: pointer; width: 1.35rem; height: 1.35rem; border-radius: 0.35rem; border: 2px solid #9ca3af; transition: all 0.2s ease; }
-        .form-checkbox:checked { background-color: #4f46e5; border-color: #4f46e5; background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 00-1.414 0L7 8.586 4.207 5.793a1 1 0 00-1.414 1.414l3.5 3.5a1 1 0 001.414 0l5-5a1 1 0 000-1.414z'/%3e%3c/svg%3e"); background-size: 100% 100%; background-position: center; background-repeat: no-repeat; }
         
-        /* New Nav Styles based on images */
+        .assignment-item { 
+            border-left: 5px solid transparent; 
+            transition: all 0.2s ease; 
+            padding: 1rem; 
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .assignment-item:hover {
+            border-left-color: #a5b4fc;
+            transform: translateX(4px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .assignment-item.active { 
+            background-color: #eef2ff; 
+            border-left-color: #4f46e5; 
+            border-color: #c7d2fe;
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+            transform: translateX(4px);
+        }
+        
+        .roster-student-item, .available-student-item { 
+            border: 1px solid #e5e7eb; 
+            padding: 1rem; 
+            border-radius: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        
+        .available-student-item:hover {
+            background-color: #f9fafb;
+            border-color: #d1d5db;
+        }
+        
+        .form-checkbox { 
+            appearance: none; 
+            cursor: pointer; 
+            width: 1.35rem; 
+            height: 1.35rem; 
+            border-radius: 0.35rem; 
+            border: 2px solid #9ca3af; 
+            transition: all 0.2s ease;
+        }
+        
+        .form-checkbox:checked { 
+            background-color: #4f46e5; 
+            border-color: #4f46e5; 
+            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 00-1.414 0L7 8.586 4.207 5.793a1 1 0 00-1.414 1.414l3.5 3.5a1 1 0 001.414 0l5-5a1 1 0 000-1.414z'/%3e%3c/svg%3e"); 
+            background-size: 100% 100%; 
+            background-position: center; 
+            background-repeat: no-repeat;
+        }
+        
         .nav-link {
             padding: 0.75rem 1.25rem;
-            color: #6b7280; /* Gray-500 */
+            color: #6b7280;
             font-weight: 500;
             border-bottom: 3px solid transparent;
             transition: all 0.2s ease;
+            position: relative;
         }
+        
         .nav-link:hover {
-            color: #111827; /* Gray-900 */
+            color: #111827;
         }
+        
         .nav-link.active {
-            color: #4f46e5; /* Primary Color */
+            color: #4f46e5;
             border-bottom-color: #4f46e5;
             font-weight: 600;
+        }
+        
+        .action-button {
+            transition: all 0.2s ease;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .action-button:active {
+            transform: translateY(0);
+        }
+        
+        .tab-button {
+            transition: all 0.2s ease;
+        }
+        
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 400px;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-success {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
+        
+        .badge-warning {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .badge-info {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        
+        /* Smooth animations */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Custom scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Skeleton Loading Styles */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s ease-in-out infinite;
+            border-radius: 8px;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .skeleton-text {
+            height: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .skeleton-title {
+            height: 2.5rem;
+            width: 70%;
+            margin-bottom: 1rem;
+        }
+
+        .skeleton-subtitle {
+            height: 1rem;
+            width: 50%;
+            margin-bottom: 2rem;
+        }
+
+        .skeleton-panel {
+            height: 600px;
+            border-radius: 16px;
+        }
+
+        .skeleton-search {
+            height: 48px;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .skeleton-filter {
+            height: 48px;
+            border-radius: 12px;
+        }
+
+        .skeleton-item {
+            height: 140px;
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+        }
+
+        .content-hidden {
+            display: none;
+        }
+
+        .content-visible {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <header class="sticky top-0 bg-white border-b border-gray-200 z-10">
+    <header class="sticky top-0 bg-white border-b border-gray-200 z-10 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 
@@ -58,19 +267,18 @@
                 </div>
                 
                 <nav class="flex h-full items-stretch -mb-px space-x-2 sm:space-x-4">
-                    <a href="dashBoardUI.html" class="nav-link active">
+                    <a href="dashBoardUI.html" class="nav-link">
                        <span class="text-sm">User Management</span> 
                     </a>
                     <a href="#" class="nav-link">
                         <span class="text-sm">Teacher</span>
                     </a>
-                    <a href="#" class="nav-link">
+                    <a href="student.html" class="nav-link active">
                         <span class="text-sm">Student</span>
                     </a>
                     <a href="#" class="nav-link relative">
                         <span class="text-sm">Reports</span>
                         <span class="ml-2 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white bg-red-500 rounded-full">15</span>
-                        </span>
                     </a>
                 </nav>
 
@@ -82,212 +290,406 @@
             </div>
         </div>
     </header>
+
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-        <h1 class="text-4xl font-extrabold text-gray-900 mb-2">Subject/Room Assignment Manager 📝</h1>
-        <p class="text-gray-500 mb-8">Manually assign students to created rooms/subjects and manage class rosters.</p>
-        
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Skeleton Loading State -->
+        <div id="skeleton-loader">
+            <div class="mb-8">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-subtitle"></div>
+            </div>
             
-            <div class="panel">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-3">📚 Select Room/Subject Instance</h3>
-                
-                <div class="space-y-4 mb-6">
-                    <input type="text" id="subject-search" placeholder="Search room name, time, or department..." class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none transition">
-                    
-                    <div class="grid grid-cols-2 gap-3">
-                        <select id="subject-dept-filter" class="col-span-1 px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none">
-                            <option value="">Filter by Dept (All)</option>
-                            <option value="BSIT">BSIT</option>
-                            <option value="BSHM">BSHM</option>
-                            <option value="BSBA">BSBA</option>
-                            <option value="BSED">BSED</option>
-                        </select>
-                        <select id="subject-category-filter" class="col-span-1 px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none">
-                            <option value="">Filter by Category (All)</option>
-                            <option value="GE">General Education (GE)</option>
-                            <option value="Major">Major Subject</option>
-                            <option value="Elective">Elective</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="text-sm font-semibold text-gray-600 mb-3 ml-1">Available Rooms:</div> <div id="subject-assignment-list" class="space-y-3 max-h-[500px] overflow-y-auto pr-1">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="skeleton skeleton-panel"></div>
+                <div class="skeleton skeleton-panel"></div>
+            </div>
+        </div>
 
-                    <div 
-                        data-room-id="C301A" 
-                        data-room-name="C301: Data Structures" 
-                        data-dept="BSIT" 
-                        data-level="4th" 
-                        data-category="Major" 
-                        data-capacity="60" 
-                        data-assigned="45" 
-                        data-time="08:00 AM" 
-                        class="assignment-item active cursor-pointer"
-                    >
-                        <div class="flex justify-between items-start mb-1">
-                            <h4 class="font-extrabold primary-color-text text-lg">C301: Data Structures <span class="text-sm text-gray-500 font-normal">(4th Yr, Major)</span></h4>
-                            <span class="text-sm font-semibold text-gray-700 primary-color-text">45/60 Assigned</span>
-                        </div>
-                        <div class="grid grid-cols-2 text-sm text-gray-600 gap-y-1">
-                            <div><span class="font-medium">Time:</span> 08:00 AM - 09:30 AM</div>
-                            <div><span class="font-medium">Department:</span> BSIT</div>
-                            <div class="col-span-2"><span class="font-medium">Attendance Time Limit:</span> 15 mins</div>
-                        </div>
+        <!-- Actual Content -->
+        <div id="actual-content" class="content-hidden">
+            <!-- Success Toast Notification -->
+            <div id="success-toast" class="toast transform translate-x-full transition-transform duration-300 ease-in-out">
+                <div class="bg-white rounded-xl shadow-2xl border-l-4 border-green-500 p-4 flex items-center gap-3">
+                    <div class="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
                     </div>
-                    
-                    <div 
-                        data-room-id="L102B" 
-                        data-room-name="L102: Advanced Writing" 
-                        data-dept="BSED" 
-                        data-level="1st" 
-                        data-category="GE" 
-                        data-capacity="40" 
-                        data-assigned="32" 
-                        data-time="10:00 AM" 
-                        class="assignment-item cursor-pointer hover:bg-gray-50"
-                    >
-                       <div class="flex justify-between items-start mb-1">
-                            <h4 class="font-extrabold text-gray-900 text-lg">L102: Advanced Writing <span class="text-sm text-gray-500 font-normal">(1st Yr, GE)</span></h4>
-                            <span class="text-sm font-semibold text-gray-500">32/40 Assigned</span>
-                        </div>
-                        <div class="grid grid-cols-2 text-sm text-gray-600 gap-y-1">
-                            <div><span class="font-medium">Time:</span> 10:00 AM - 11:30 AM</div>
-                            <div><span class="font-medium">Department:</span> BSED</div>
-                            <div class="col-span-2"><span class="font-medium">Attendance Time Limit:</span> 10 mins</div>
-                        </div>
+                    <div class="flex-1">
+                        <p id="toast-message" class="text-sm font-semibold text-gray-800"></p>
                     </div>
-                     <div 
-                        data-room-id="H303C" 
-                        data-room-name="H303: Tourism Management" 
-                        data-dept="BSHM" 
-                        data-level="3rd" 
-                        data-category="Major" 
-                        data-capacity="50" 
-                        data-assigned="20" 
-                        data-time="01:00 PM" 
-                        class="assignment-item cursor-pointer hover:bg-gray-50"
-                    >
-                       <div class="flex justify-between items-start mb-1">
-                            <h4 class="font-extrabold text-gray-900 text-lg">H303: Tourism Management <span class="text-sm text-gray-500 font-normal">(3rd Yr, Major)</span></h4>
-                            <span class="text-sm font-semibold text-gray-500">20/50 Assigned</span>
-                        </div>
-                        <div class="grid grid-cols-2 text-sm text-gray-600 gap-y-1">
-                            <div><span class="font-medium">Time:</span> 01:00 PM - 02:30 PM</div>
-                            <div><span class="font-medium">Department:</span> BSHM</div>
-                            <div class="col-span-2"><span class="font-medium">Attendance Time Limit:</span> 15 mins</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-4 border-t pt-4">
-                    <button class="w-full px-4 py-2 text-sm text-indigo-600 border border-indigo-200 rounded-lg hover:bg-indigo-50 transition font-medium">
-                        Manage Room Details &rarr;
+                    <button onclick="document.getElementById('success-toast').classList.add('translate-x-full')" class="text-gray-400 hover:text-gray-600 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
                     </button>
                 </div>
             </div>
+
+            <div class="mb-8 fade-in">
+                <h1 class="text-4xl font-extrabold text-gray-900 mb-2">Subject/Room Assignment Manager 📝</h1>
+                <p class="text-gray-500">Manually assign students to created rooms/subjects and manage class rosters.</p>
+            </div>
             
-            <div class="panel">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-3 flex items-center justify-between">
-                    Students for:
-                    <span id="subject-roster-title" class="primary-color-text font-extrabold text-xl">C301: Data Structures</span>
-                </h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 
-                <div class="flex border-b border-gray-200 mb-4 space-x-6">
-                    <button class="tab-button font-bold pb-2 border-b-2 tab-active primary-color-text border-primary" data-tab="roster">
-                        Current Roster (<span id="roster-count">45</span>)
-                    </button>
-                    <button class="tab-button font-medium text-gray-500 hover:text-gray-700 pb-2 border-b-2 border-transparent" data-tab="available">
-                        Students to Assign (<span id="available-count">120</span>)
-                    </button>
-                </div>
-
-                <div id="tab-content">
-                    
-                    <div id="tab-roster" class="tab-pane space-y-2 max-h-[400px] overflow-y-auto pr-1">
-                        <p class="text-gray-500 text-sm mb-3">Students currently assigned to this room/subject.</p>
-                        <input type="text" placeholder="Search student name or ID..." class="w-full px-4 py-2 border border-gray-300 rounded-xl mb-3 focus:ring-2 ring-primary focus:outline-none transition">
-
-                        <div class="roster-student-item flex justify-between items-center" data-dept="BSIT" data-year="4th">
-                            <div>
-                                <p class="font-medium text-gray-900">Alex Johnson</p>
-                                <p class="text-xs text-gray-500 mt-0.5">ID: 12345 | BSIT, 4th Year</p>
-                            </div>
-                            <button class="text-sm text-red-500 hover:text-red-700 action-button px-3 py-1 rounded-lg border border-red-200 hover:bg-red-50 transition">Remove</button>
-                        </div>
-                        <div class="roster-student-item flex justify-between items-center" data-dept="BSIT" data-year="4th">
-                            <div>
-                                <p class="font-medium text-gray-900">Liam O'Connell</p>
-                                <p class="text-xs text-gray-500 mt-0.5">ID: 12771 | BSIT, 4th Year</p>
-                            </div>
-                            <button class="text-sm text-red-500 hover:text-red-700 action-button px-3 py-1 rounded-lg border border-red-200 hover:bg-red-50 transition">Remove</button>
-                        </div>
-                        <div class="text-center text-sm text-gray-500 py-2">... 43 more students ...</div>
+                <!-- Left Panel: Room Selection -->
+                <div class="panel fade-in">
+                    <div class="flex items-center justify-between mb-6 border-b pb-4">
+                        <h3 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                            </svg>
+                            Select Room/Subject
+                        </h3>
+                        <span class="badge badge-info">3 Rooms</span>
                     </div>
                     
-                    <div id="tab-available" class="tab-pane hidden">
-                        <p class="text-gray-500 text-sm mb-3">Filter and select eligible students to assign to the current room.</p>
+                    <div class="space-y-4 mb-6">
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                            <input type="text" id="subject-search" placeholder="Search room name, time, or department..." class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none transition">
+                        </div>
                         
-                        <div class="grid grid-cols-2 gap-3 mb-4">
-                            <select id="student-dept-filter" class="px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none">
-                                <option value="">Filter by Department (All)</option>
-                                <option value="BSIT">BS Information Technology</option>
-                                <option value="BSBA">BS Business Administration</option>
-                                <option value="BSHM">BS Hospitality Management</option>
+                        <div class="grid grid-cols-2 gap-3">
+                            <select id="subject-dept-filter" class="col-span-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none transition">
+                                <option value="">All Departments</option>
+                                <option value="BSIT">BSIT</option>
+                                <option value="BSHM">BSHM</option>
+                                <option value="BSBA">BSBA</option>
+                                <option value="BSED">BSED</option>
                             </select>
-                            <select id="student-year-filter" class="px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none">
-                                <option value="">Filter by Year Level (All)</option>
-                                <option value="4th">4th Year</option>
-                                <option value="3rd">3rd Year</option>
-                                <option value="2nd">2nd Year</option>
-                                <option value="1st">1st Year</option>
+                            <select id="subject-category-filter" class="col-span-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none transition">
+                                <option value="">All Categories</option>
+                                <option value="GE">General Education</option>
+                                <option value="Major">Major Subject</option>
+                                <option value="Elective">Elective</option>
                             </select>
                         </div>
+                    </div>
+                    
+                    <div id="subject-assignment-list" class="space-y-3 max-h-[500px] overflow-y-auto pr-1 custom-scrollbar">
 
-                        <div class="flex justify-between items-center pb-3 border-b border-gray-200 mb-4">
-                            <label class="flex items-center space-x-3 text-sm text-gray-600 cursor-pointer font-medium">
-                                <input type="checkbox" id="student-select-all" class="form-checkbox">
-                                <span>Select All Visible</span>
-                            </label>
-                            <button id="add-selected-button" class="action-button px-5 py-2 text-sm rounded-xl text-white primary-color-bg hover-primary-bg font-semibold disabled:opacity-50 transition" disabled>
-                                Assign Selected (0)
-                            </button>
+                        <div 
+                            data-room-id="C301A" 
+                            data-room-name="C301: Data Structures" 
+                            data-dept="BSIT" 
+                            data-level="4th" 
+                            data-category="Major" 
+                            data-capacity="60" 
+                            data-assigned="45" 
+                            data-time="08:00 AM" 
+                            class="assignment-item active cursor-pointer"
+                        >
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-extrabold primary-color-text text-lg">C301: Data Structures</h4>
+                                    <p class="text-sm text-gray-500 mt-1">4th Year • Major Subject</p>
+                                </div>
+                                <span class="badge badge-success">45/60</span>
+                            </div>
+                            <div class="grid grid-cols-2 text-sm text-gray-600 gap-2 mt-3 pt-3 border-t border-gray-100">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span>08:00 AM - 09:30 AM</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                    <span>BSIT</span>
+                                </div>
+                                <div class="col-span-2 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                    <span>15 mins attendance window</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div 
+                            data-room-id="L102B" 
+                            data-room-name="L102: Advanced Writing" 
+                            data-dept="BSED" 
+                            data-level="1st" 
+                            data-category="GE" 
+                            data-capacity="40" 
+                            data-assigned="32" 
+                            data-time="10:00 AM" 
+                            class="assignment-item cursor-pointer"
+                        >
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-extrabold text-gray-900 text-lg">L102: Advanced Writing</h4>
+                                    <p class="text-sm text-gray-500 mt-1">1st Year • General Education</p>
+                                </div>
+                                <span class="badge badge-warning">32/40</span>
+                            </div>
+                            <div class="grid grid-cols-2 text-sm text-gray-600 gap-2 mt-3 pt-3 border-t border-gray-100">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span>10:00 AM - 11:30 AM</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                    <span>BSED</span>
+                                </div>
+                                <div class="col-span-2 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                    <span>10 mins attendance window</span>
+                                </div>
+                            </div>
                         </div>
 
-                        <div id="available-students-list" class="space-y-2 max-h-[250px] overflow-y-auto pr-1">
-                            <label class="available-student-item flex items-center cursor-pointer" data-dept="BSIT" data-year="4th" data-category="Major">
-                                <input type="checkbox" name="available_student" class="form-checkbox roster-student-checkbox mr-4">
+                        <div 
+                            data-room-id="H303C" 
+                            data-room-name="H303: Tourism Management" 
+                            data-dept="BSHM" 
+                            data-level="3rd" 
+                            data-category="Major" 
+                            data-capacity="50" 
+                            data-assigned="20" 
+                            data-time="01:00 PM" 
+                            class="assignment-item cursor-pointer"
+                        >
+                            <div class="flex justify-between items-start mb-2">
                                 <div>
-                                    <p class="font-medium text-gray-900">Mark Zeller</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">ID: 15101 | BSIT, 4th Year</p>
+                                    <h4 class="font-extrabold text-gray-900 text-lg">H303: Tourism Management</h4>
+                                    <p class="text-sm text-gray-500 mt-1">3rd Year • Major Subject</p>
                                 </div>
-                            </label>
-                            <label class="available-student-item flex items-center cursor-pointer" data-dept="BSIT" data-year="3rd" data-category="Major">
-                                <input type="checkbox" name="available_student" class="form-checkbox roster-student-checkbox mr-4">
-                                <div>
-                                    <p class="font-medium text-gray-900">Jenna Torres</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">ID: 16223 | BSIT, 3rd Year</p>
+                                <span class="badge badge-warning">20/50</span>
+                            </div>
+                            <div class="grid grid-cols-2 text-sm text-gray-600 gap-2 mt-3 pt-3 border-t border-gray-100">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span>01:00 PM - 02:30 PM</span>
                                 </div>
-                            </label>
-                            <label class="available-student-item flex items-center cursor-pointer" data-dept="BSHM" data-year="3rd" data-category="Major">
-                                <input type="checkbox" name="available_student" class="form-checkbox roster-student-checkbox mr-4">
-                                <div>
-                                    <p class="font-medium text-gray-900">Victor Cruz</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">ID: 17800 | BSHM, 3rd Year</p>
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                    <span>BSHM</span>
                                 </div>
-                            </label>
-                            <label class="available-student-item flex items-center cursor-pointer" data-dept="BSBA" data-year="1st" data-category="GE">
-                                <input type="checkbox" name="available_student" class="form-checkbox roster-student-checkbox mr-4">
-                                <div>
-                                    <p class="font-medium text-gray-900">Sarah Chen</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">ID: 18105 | BSBA, 1st Year</p>
+                                <div class="col-span-2 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                    <span>15 mins attendance window</span>
                                 </div>
-                            </label>
-                             <div class="text-center text-sm text-gray-500 py-2">... 116 more available students ...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 border-t pt-4">
+                        <button class="w-full px-4 py-3 text-sm primary-color-text border-2 border-indigo-200 rounded-xl hover:bg-indigo-50 transition font-semibold flex items-center justify-center gap-2 group">
+                            <span>Manage Room Details</span>
+                            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Right Panel: Student Management -->
+                <div class="panel fade-in">
+                    <div class="flex items-center justify-between mb-6 border-b pb-4">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                            <h3 class="text-xl font-bold text-gray-800">Students for:</h3>
+                        </div>
+                        <span id="subject-roster-title" class="primary-color-text font-extrabold text-lg">C301: Data Structures</span>
+                    </div>
+                    
+                    <div class="flex border-b border-gray-200 mb-6 space-x-6">
+                        <button class="tab-button font-bold pb-3 border-b-2 tab-active primary-color-text border-primary" data-tab="roster">
+                            <span class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Current Roster (<span id="roster-count">45</span>)
+                            </span>
+                        </button>
+                        <button class="tab-button font-medium text-gray-500 hover:text-gray-700 pb-3 border-b-2 border-transparent" data-tab="available">
+                            <span class="flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                                </svg>
+                                Available (<span id="available-count">120</span>)
+                            </span>
+                        </button>
+                    </div>
+
+                    <div id="tab-content">
+                        
+                        <!-- Current Roster Tab -->
+                        <div id="tab-roster" class="tab-pane">
+                            <p class="text-gray-500 text-sm mb-4 flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Students currently assigned to this room/subject.
+                            </p>
+                            <div class="relative mb-4">
+                                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                                <input type="text" placeholder="Search student name or ID..." class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none transition">
+                            </div>
+
+                            <div class="space-y-2 max-h-[400px] overflow-y-auto pr-1 custom-scrollbar">
+                                <div class="roster-student-item flex justify-between items-center" data-dept="BSIT" data-year="4th">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
+                                            <span class="text-indigo-600 font-bold text-sm">AJ</span>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium text-gray-900">Alex Johnson</p>
+                                            <p class="text-xs text-gray-500 mt-0.5">ID: 12345 • BSIT, 4th Year</p>
+                                        </div>
+                                    </div>
+                                    <button class="group text-sm text-red-500 hover:text-red-700 action-button px-4 py-2 rounded-lg border border-red-200 hover:bg-red-50 transition flex items-center gap-2">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                        Remove
+                                    </button>
+                                </div>
+                                <div class="roster-student-item flex justify-between items-center" data-dept="BSIT" data-year="4th">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                            <span class="text-green-600 font-bold text-sm">LO</span>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium text-gray-900">Liam O'Connell</p>
+                                            <p class="text-xs text-gray-500 mt-0.5">ID: 12771 • BSIT, 4th Year</p>
+                                        </div>
+                                    </div>
+                                    <button class="group text-sm text-red-500 hover:text-red-700 action-button px-4 py-2 rounded-lg border border-red-200 hover:bg-red-50 transition flex items-center gap-2">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                        Remove
+                                    </button>
+                                </div>
+                                <div class="text-center text-sm text-gray-500 py-3 bg-gray-50 rounded-lg">
+                                    <span class="font-medium">... 43 more students ...</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Available Students Tab -->
+                        <div id="tab-available" class="tab-pane hidden">
+                            <p class="text-gray-500 text-sm mb-4 flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Filter and select eligible students to assign to this room.
+                            </p>
+                            
+                            <div class="grid grid-cols-2 gap-3 mb-4">
+                                <select id="student-dept-filter" class="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none transition">
+                                    <option value="">All Departments</option>
+                                    <option value="BSIT">BS Information Technology</option>
+                                    <option value="BSBA">BS Business Administration</option>
+                                    <option value="BSHM">BS Hospitality Management</option>
+                                </select>
+                                <select id="student-year-filter" class="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 ring-primary focus:outline-none transition">
+                                    <option value="">All Year Levels</option>
+                                    <option value="4th">4th Year</option>
+                                    <option value="3rd">3rd Year</option>
+                                    <option value="2nd">2nd Year</option>
+                                    <option value="1st">1st Year</option>
+                                </select>
+                            </div>
+
+                            <div class="flex justify-between items-center pb-4 border-b border-gray-200 mb-4">
+                                <label class="flex items-center space-x-3 text-sm text-gray-600 cursor-pointer font-medium hover:text-gray-900 transition">
+                                    <input type="checkbox" id="student-select-all" class="form-checkbox">
+                                    <span>Select All Visible</span>
+                                </label>
+                                <button id="add-selected-button" class="group action-button px-6 py-2.5 text-sm rounded-xl text-white primary-color-bg hover-primary-bg font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center gap-2 shadow-md hover:shadow-lg" disabled>
+                                    <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                    </svg>
+                                    Assign Selected (0)
+                                </button>
+                            </div>
+
+                            <div id="available-students-list" class="space-y-2 max-h-[250px] overflow-y-auto pr-1 custom-scrollbar">
+                                <label class="available-student-item flex items-center cursor-pointer" data-dept="BSIT" data-year="4th" data-category="Major">
+                                    <input type="checkbox" name="available_student" class="form-checkbox roster-student-checkbox mr-4">
+                                    <div class="flex items-center gap-3 flex-1">
+                                        <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                            <span class="text-purple-600 font-bold text-sm">MZ</span>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium text-gray-900">Mark Zeller</p>
+                                            <p class="text-xs text-gray-500 mt-0.5">ID: 15101 • BSIT, 4th Year</p>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="available-student-item flex items-center cursor-pointer" data-dept="BSIT" data-year="3rd" data-category="Major">
+                                    <input type="checkbox" name="available_student" class="form-checkbox roster-student-checkbox mr-4">
+                                    <div class="flex items-center gap-3 flex-1">
+                                        <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center">
+                                            <span class="text-pink-600 font-bold text-sm">JT</span>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium text-gray-900">Jenna Torres</p>
+                                            <p class="text-xs text-gray-500 mt-0.5">ID: 16223 • BSIT, 3rd Year</p>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="available-student-item flex items-center cursor-pointer" data-dept="BSHM" data-year="3rd" data-category="Major">
+                                    <input type="checkbox" name="available_student" class="form-checkbox roster-student-checkbox mr-4">
+                                    <div class="flex items-center gap-3 flex-1">
+                                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                            <span class="text-blue-600 font-bold text-sm">VC</span>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium text-gray-900">Victor Cruz</p>
+                                            <p class="text-xs text-gray-500 mt-0.5">ID: 17800 • BSHM, 3rd Year</p>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="available-student-item flex items-center cursor-pointer" data-dept="BSBA" data-year="1st" data-category="GE">
+                                    <input type="checkbox" name="available_student" class="form-checkbox roster-student-checkbox mr-4">
+                                    <div class="flex items-center gap-3 flex-1">
+                                        <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
+                                            <span class="text-yellow-600 font-bold text-sm">SC</span>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium text-gray-900">Sarah Chen</p>
+                                            <p class="text-xs text-gray-500 mt-0.5">ID: 18105 • BSBA, 1st Year</p>
+                                        </div>
+                                    </div>
+                                </label>
+                                <div class="text-center text-sm text-gray-500 py-3 bg-gray-50 rounded-lg">
+                                    <span class="font-medium">... 116 more available students ...</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </main>
 
     <footer class="bg-white border-t border-gray-100 mt-10">
@@ -297,6 +699,31 @@
     </footer>
 
     <script>
+        function showToast(message) {
+            const toast = document.getElementById('success-toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.classList.remove('translate-x-full');
+
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3000);
+        }
+
+        // Show skeleton loader on page load
+        window.addEventListener('load', () => {
+            const skeletonLoader = document.getElementById('skeleton-loader');
+            const actualContent = document.getElementById('actual-content');
+            
+            // Simulate loading time (1.5-2 seconds)
+            setTimeout(() => {
+                skeletonLoader.style.display = 'none';
+                actualContent.classList.remove('content-hidden');
+                actualContent.classList.add('content-visible');
+            }, 1800);
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
             
             const assignmentItems = document.querySelectorAll('.assignment-item');
@@ -310,11 +737,9 @@
             const selectAllCheckbox = document.getElementById('student-select-all');
             const addSelectedButton = document.getElementById('add-selected-button');
             
-            // Subject/Room Filters (Left Panel)
             const subjectDeptFilter = document.getElementById('subject-dept-filter');
             const subjectCategoryFilter = document.getElementById('subject-category-filter');
             
-            // Student Filters (Right Panel)
             const studentDeptFilter = document.getElementById('student-dept-filter');
             const studentYearFilter = document.getElementById('student-year-filter');
 
@@ -323,7 +748,6 @@
             let currentRoomLevel = '';
             let currentRoomCategory = '';
 
-            // --- Subject/Room List Filtering Logic (Left Panel) ---
             function filterSubjectList() {
                 const selectedDept = subjectDeptFilter.value;
                 const selectedCategory = subjectCategoryFilter.value;
@@ -338,14 +762,12 @@
                     item.style.display = (matchesDept && matchesCategory) ? 'block' : 'none';
                 });
 
-                // Re-select the first visible room if the currently active one is hidden
                 const activeItem = document.querySelector('.assignment-item.active');
                 if (activeItem && activeItem.style.display === 'none') {
                     const firstVisible = document.querySelector('.assignment-item[style*="block"]');
                     if (firstVisible) {
                          firstVisible.click();
                     } else {
-                        // Handle case where all rooms are filtered out (optional: clear right panel)
                         subjectRosterTitle.textContent = 'None Selected';
                         rosterCount.textContent = '0';
                     }
@@ -355,8 +777,6 @@
             subjectDeptFilter.addEventListener('change', filterSubjectList);
             subjectCategoryFilter.addEventListener('change', filterSubjectList);
 
-
-            // --- Tab Switching Logic (Unchanged) ---
             function switchTab(targetTab) {
                 tabButtons.forEach(btn => {
                     btn.classList.remove('tab-active', 'primary-color-text', 'border-primary', 'font-bold');
@@ -384,7 +804,6 @@
                 });
             });
 
-            // --- Subject/Room Selection Logic (Left Panel Click) ---
             assignmentItems.forEach(item => {
                 item.addEventListener('click', function() {
                     assignmentItems.forEach(i => i.classList.remove('active'));
@@ -393,32 +812,26 @@
                     const roomName = this.getAttribute('data-room-name');
                     const assignedCount = this.getAttribute('data-assigned');
                     
-                    // Capture the selected room's required attributes
                     currentRoomDept = this.getAttribute('data-dept');
                     currentRoomLevel = this.getAttribute('data-level');
                     currentRoomCategory = this.getAttribute('data-category'); 
 
-                    // Update UI elements
                     subjectRosterTitle.textContent = roomName;
                     rosterCount.textContent = assignedCount;
 
-                    // Automatically apply filters to match the selected room (Dept and Year)
                     studentDeptFilter.value = currentRoomDept;
                     studentYearFilter.value = currentRoomLevel;
                     
-                    // Re-run student filter if we are on the available tab
                     const availableTab = document.getElementById('tab-available');
                     if (!availableTab.classList.contains('hidden')) {
                          filterAvailableStudents();
                     }
                     
-                    switchTab('roster'); // Reset to Roster tab on new selection
+                    switchTab('roster');
                 });
             });
 
-            // --- Filter Available Students (Right Panel, 'available' tab) ---
             function filterAvailableStudents() {
-                // Get the current filter selections from the dropdowns
                 const selectedDept = studentDeptFilter.value;
                 const selectedYear = studentYearFilter.value;
 
@@ -430,7 +843,6 @@
                     const studentDept = item.getAttribute('data-dept');
                     const studentYear = item.getAttribute('data-year');
                     
-                    // Filter Logic: Must match ALL selected filters (or filter is 'All')
                     const matchesDept = selectedDept === '' || studentDept === selectedDept;
                     const matchesYear = selectedYear === '' || studentYear === selectedYear;
 
@@ -441,23 +853,29 @@
                     }
                 });
                 
-                // Reset 'Select All' and button state after filtering
                 selectAllCheckbox.checked = false;
                 checkSelectedState();
             }
 
-            // Add event listeners for student filters
             studentDeptFilter.addEventListener('change', filterAvailableStudents);
             studentYearFilter.addEventListener('change', filterAvailableStudents);
 
-            // --- Checkbox and Button State Logic (Right Panel) (Unchanged) ---
             function checkSelectedState() {
                 const checkedCount = document.querySelectorAll('#available-students-list .roster-student-checkbox:checked').length;
                 addSelectedButton.disabled = checkedCount === 0;
-                addSelectedButton.textContent = checkedCount > 0 ? `Assign Selected (${checkedCount})` : 'Assign Selected (0)';
+                addSelectedButton.innerHTML = checkedCount > 0 ? `
+                    <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Assign Selected (${checkedCount})
+                ` : `
+                    <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Assign Selected (0)
+                `;
             }
 
-            // Listener for 'Select All'
             selectAllCheckbox.addEventListener('change', function() {
                 const isChecked = this.checked;
                 visibleAvailableStudents.forEach(checkbox => {
@@ -466,7 +884,6 @@
                 checkSelectedState();
             });
 
-            // Listener for individual checkboxes
             if(availableStudentListContainer) {
                 availableStudentListContainer.addEventListener('change', function(e) {
                     if (e.target.classList.contains('roster-student-checkbox')) {
@@ -480,9 +897,22 @@
                 });
             }
 
-            // --- Initial Load ---
+            // Add selected students action
+            addSelectedButton.addEventListener('click', function() {
+                const checkedCount = document.querySelectorAll('#available-students-list .roster-student-checkbox:checked').length;
+                if (checkedCount > 0) {
+                    showToast(`Successfully assigned ${checkedCount} student(s) to ${subjectRosterTitle.textContent}!`);
+                    
+                    // Uncheck all
+                    document.querySelectorAll('#available-students-list .roster-student-checkbox:checked').forEach(cb => {
+                        cb.checked = false;
+                    });
+                    selectAllCheckbox.checked = false;
+                    checkSelectedState();
+                }
+            });
+
             if (assignmentItems.length > 0) {
-                // Manually trigger click on the first item to initialize data and filters
                 assignmentItems[0].click(); 
             }
         });
